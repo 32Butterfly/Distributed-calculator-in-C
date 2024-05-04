@@ -32,13 +32,13 @@ int main() {
 
   printf("Server: %s\n", server_response);
 
-  char testing [100] = "Hello Server!!\n";
+  char testing [100] = "Hello Server!!";
 
   send(network_socket, testing, strlen(testing), 0); 
 
   server_success = recv( network_socket, server, sizeof(server), 0);
 
-  printf("Server: %s\n", server);
+  printf("Server: %s", server);
 
   char response;
 
@@ -57,6 +57,10 @@ int main() {
     if (strstr(server, "Success") != NULL) {
       printf("Server validation successful. Exiting loop.\n");
       break; // Exit the loop
+    }
+
+    if (strstr(server, "Incorrect choice") != NULL) {
+        printf("Please input your choice: ");
     }
   
   }

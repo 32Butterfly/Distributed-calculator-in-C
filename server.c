@@ -17,7 +17,7 @@ void choiceMenu (int answer, int client_socket);
 
 int main() {
   
-  char server_message[100] = "You have reached the server\n";
+  char server_message[100] = "You have reached the server";
 
   char client [100];
   int client_response;
@@ -86,9 +86,10 @@ int getValidChoice(int client_socket){
 
     if (answer < 1 || answer > 3) {
       send(client_socket, "Incorrect choice\n", sizeof("Incorrect choice\n"), 0);
+      sleep(2);
     }
 
-  }while (answer < 1|| answer > 3);
+  }while (answer < 1 || answer > 3);
 
   return answer;
 }
@@ -106,7 +107,7 @@ void choiceMenu(int answer, int client_socket){
       send(client_socket, "Success you chose something\n", sizeof("Success you chose something\n"), 0);
       break;
    default:
-     send(client_socket, "Incorrect choice\n", sizeof("Incorrect choice\n"), 0);
+     send(client_socket, "Incorrect choice\nPlease input your choice\n", sizeof("Incorrect choice\nPlease input your choice\n"), 0);
      break;
   }
 }
