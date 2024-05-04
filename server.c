@@ -10,6 +10,8 @@ int main() {
   
   char server_message[100] = "You have reached the server";
 
+  char client [100];
+  int client_response;
   //create socket
   int server_socket;
   server_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -29,6 +31,14 @@ int main() {
 
   //send the message
   send(client_socket, server_message, sizeof(server_message), 0 );
+
+  client_response = read(client_socket, client, 100);
+
+  printf("Client: %s\n", client);
+
+  char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
+
+  send(client_socket, testing, sizeof(testing), 0);
 
   //close the socket
   close(server_socket);

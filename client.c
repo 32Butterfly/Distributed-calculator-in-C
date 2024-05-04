@@ -10,6 +10,9 @@ int main() {
 
   //create socket
   int network_socket;
+  int server_success;
+
+  char server [150];
   network_socket = socket(AF_INET, SOCK_STREAM, 0);
 
   //specify address
@@ -27,6 +30,18 @@ int main() {
   recv(network_socket, &server_response, sizeof(server_response), 0);
 
   printf("Server: %s\n", server_response);
+
+  char testing [100] = "Hello Server!!";
+
+  send(network_socket, testing, strlen(testing), 0); 
+
+  server_success = recv( network_socket, server, sizeof(server), 0);
+
+  printf("Server: %s", server);
+
+  int response;
+
+  scanf("%d", &response); 
 
   close(network_socket);
 
