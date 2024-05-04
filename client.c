@@ -23,26 +23,44 @@ int main() {
 
   int connection_status = connect(network_socket, (struct sockaddr *) &server_address, sizeof(server_address));
   if (connection_status < 0){
-    printf( "Error connecting" );
+    printf( "Error connecting to the server\n" );
+    exit(1);
   }
 
   char server_response[100];
-  recv(network_socket, &server_response, sizeof(server_response), 0);
+  recv(network_socket, server_response, sizeof(server_response), 0);
 
   printf("Server: %s\n", server_response);
 
-  char testing [100] = "Hello Server!!";
+  char testing [100] = "Hello Server!!\n";
 
   send(network_socket, testing, strlen(testing), 0); 
 
   server_success = recv( network_socket, server, sizeof(server), 0);
 
-  printf("Server: %s", server);
+  printf("Server: %s\n", server);
 
-  int response;
+  char response;
 
-  scanf("%d", &response); 
+  while (1){
+    
+    memset(server, 0, sizeof(server));
+    scanf(" %c", &response);
 
+    send (network_socket, &response, sizeof(response), 0); 
+    sleep(2); 
+  
+    recv(network_socket, server, sizeof(server), 0);
+
+    printf("Server: %s\n", server);
+  
+    if (strstr(server, "Success") != NULL) {
+      printf("Server validation successful. Exiting loop.\n");
+      break; // Exit the loop
+    }
+  
+  }
+  
   close(network_socket);
 
   return 0;
