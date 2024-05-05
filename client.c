@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+
+void calculateFactorialClient(int network_socket);
+
 int main() {
 
   //create socket
@@ -41,6 +44,7 @@ int main() {
   printf("Server: %s", server);
 
   char response;
+  int factorial;
 
   while (1){
     
@@ -54,18 +58,45 @@ int main() {
 
     printf("Server: %s\n", server);
   
-    if (strstr(server, "Success") != NULL) {
-      printf("Server validation successful. Exiting loop.\n");
-      break; // Exit the loop
+    if (strstr(server, "factorial") != NULL) {
+
+     calculateFactorialClient(network_socket); 
+
+     break; 
     }
 
     if (strstr(server, "Incorrect choice") != NULL) {
         printf("Please input your choice: ");
     }
   
+   break; 
   }
   
   close(network_socket);
 
   return 0;
+}
+
+
+void calculateFactorialClient(int network_socket) {
+  while (1) { 
+      // Receive the question from the server
+      char question[100];
+      recv(network_socket, question, sizeof(question), 0);
+      printf("Server: %s", question);
+
+      int number;
+      scanf("%d", &number);
+
+      char number_str[100];
+      sprintf(number_str, "%d", number);
+
+      send(network_socket, number_str, sizeof(number_str), 0);
+
+      unsigned int result;
+      recv(network_socket, &result, sizeof(result), 0);
+        
+      printf("Server: Factorial of %d is %u\n", number, result);
+      break; // Exit the loop
+   } 
 }

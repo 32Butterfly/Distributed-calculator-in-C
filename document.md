@@ -11,3 +11,7 @@ with sending data back and forth between the server and the client! Time spent 1
 
 Made a bit of functionality this was more to get used to fully using sending and recieving data from client and server. Overall I think I got how it works even if I do quite a bit of errors
 before succeding. Time spent another 1 hour.
+
+2024/05/04
+
+Made it so factorial is calculated but it needs some more revision in terms of error handaling.

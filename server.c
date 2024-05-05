@@ -13,6 +13,7 @@ void error (const char *msg){
 
 int getValidChoice(int client_socket);
 void choiceMenu (int answer, int client_socket);
+void calculateFactorial(int client_socket);
 
 
 int main() {
@@ -62,9 +63,12 @@ int main() {
   int answer = getValidChoice(client_socket);
 
   choiceMenu(answer, client_socket);
+  
+  calculateFactorial(client_socket);
 
-   break;
-  }
+  break;
+ 
+ }
   //close the socket
   close(server_socket);
 
@@ -73,8 +77,8 @@ int main() {
 
 int getValidChoice(int client_socket){
   
-  int answer;
-  char client[100];  
+  int answer = 0;
+  char client[10];  
 
   do {
     
@@ -110,4 +114,37 @@ void choiceMenu(int answer, int client_socket){
      send(client_socket, "Incorrect choice\nPlease input your choice\n", sizeof("Incorrect choice\nPlease input your choice\n"), 0);
      break;
   }
+}
+
+void calculateFactorial(int client_socket){
+    
+  unsigned int answer = 1;
+  char question [100] = "Input the number of the factorial you want: ";
+  char client [100];
+  char error [100] = "Error: input the number 1 or above";
+  int number ;
+
+  sleep(3);
+  send(client_socket, question, sizeof(question), 0);
+
+  read(client_socket, client, sizeof(client));
+
+  printf ("Client: wants the factorial of %s\n", client);
+ 
+  number = atoi(client);
+  
+  while (number <= 0 || number > 30){
+    sleep(3);
+    send(client_socket, error, sizeof(error), 0);
+
+    read(client_socket, client, sizeof(client));
+
+    number = atoi(client);
+  }
+
+  for (int i = 1; i <= number; ++i){
+    answer *= i;
+  }
+
+  send (client_socket, &answer, sizeof(answer), 0);
 }
