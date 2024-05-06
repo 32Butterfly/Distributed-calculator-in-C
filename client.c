@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-
 void calculateFactorialClient(int network_socket);
+void calculateTriangleAreaClient(int network_socket);
 
 int main() {
 
@@ -63,7 +63,10 @@ int main() {
      calculateFactorialClient(network_socket); 
 
      break; 
-    }else{
+    }else if (strstr (server, "triangle") != NULL) {
+      calculateTriangleAreaClient(network_socket);
+    }
+    else{
       printf("Server: please input your choice: ");
     }
 
@@ -109,5 +112,43 @@ void calculateFactorialClient(int network_socket) {
 
     printf("Server: Factorial of %d is %d\n", number, result);
     break; // Exit the loop
+  }
+}
+
+void calculateTriangleAreaClient(int network_socket){
+
+    while (1) {
+    // Receive the question from the server
+    char question[100];
+    char server_response[100];
+    recv(network_socket, question, sizeof(question), 0);
+    printf("Server: %s", question);
+
+    int number;
+    scanf("%d", &number);
+
+    char number_str[100];
+    sprintf(number_str, "%d", number);
+
+    send(network_socket, number_str, sizeof(number_str), 0);
+
+    recv(network_socket, server_response, sizeof(server_response), 0);
+
+    while (strstr(server_response, "Error") != NULL) {
+      getchar(); //clean the input buffer. For some reason fflush(stdin) doesn't work?
+      printf("Server: %s\n", server_response);
+
+      scanf("%d", &number);
+      sprintf(number_str, "%d", number);
+
+      send(network_socket, number_str, sizeof(number_str), 0);
+      recv(network_socket, server_response, sizeof(server_response), 0);
+
+    }
+
+    double result = atoi(server_response);
+
+    printf("Server: Triangle area of triange: %.2f\n", result);
+    break; // Exit the loop   
   }
 }

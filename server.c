@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <math.h>
 
 void error (const char *msg){
   perror(msg);
@@ -17,7 +18,7 @@ int getValidChoice(int client_socket);
 void choiceMenu (int answer, int client_socket);
 void calculateFactorial(int client_socket);
 bool containsOnlyNumbers(const char *str);
-
+void findTriangleArea(int client_socket);
 
 int main() {
   
@@ -67,8 +68,11 @@ int main() {
 
   choiceMenu(answer, client_socket);
   
-  calculateFactorial(client_socket);
-
+  if ( answer == 1){
+    calculateFactorial(client_socket);
+  }else if ( answer == 2) {
+    findTriangleArea(client_socket);
+  }
   break;
  
  }
@@ -115,6 +119,7 @@ void choiceMenu(int answer, int client_socket){
       break;
    default:
      send(client_socket, "Incorrect choice\nPlease input your choice\n", sizeof("Incorrect choice\nPlease input your choice\n"), 0);
+     exit(1);
      break;
   }
 }
@@ -169,4 +174,44 @@ bool containsOnlyNumbers(const char *str) {
   }
 
    return true;
+}
+
+void findTriangleArea(int client_socket) {
+  char choose1[] = "Please input the first side length: ";
+  char choose2[] = "Please input the second side length: ";
+  char choose3[] = "Please input the third side length: ";
+  char client[100];
+  char error[] = "Error: input a number 1 or above\n";
+  int sides[0];
+  int number;
+  sleep(3);
+  send(client_socket, choose1, sizeof(choose1), 0);
+
+  while(1){
+    read(client_socket, client, sizeof(client));
+    printf("Client: First triangle side %s\n", client);
+
+        if (!containsOnlyNumbers(client)) {
+            sleep(3);
+            send(client_socket, error, sizeof(error), 0);
+            continue;
+        }
+
+        number = atoi(client);
+        if (number <= 0 || number > 30) {
+            sleep(3);
+            send(client_socket, error, sizeof(error), 0);
+            continue;
+        }
+
+        break; // Exit the loop if valid input received
+    }
+
+  int a = sides[0], b = sides[1], c = sides[2];
+  double s = (a + b + c) / 2.0;
+  double area = sqrt(s * (s - a) * (s - b) * (s - c));
+
+  char area_str[100];
+  sprintf(area_str, "Area of the triangle: %.2f\n", area);
+  send(client_socket, area_str, sizeof(area_str), 0);
 }
