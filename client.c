@@ -63,13 +63,10 @@ int main() {
      calculateFactorialClient(network_socket); 
 
      break; 
+    }else{
+      printf("Server: please input your choice: ");
     }
 
-    if (strstr(server, "Incorrect choice") != NULL) {
-        printf("Please input your choice: ");
-    }
-  
-   break; 
   }
   
   close(network_socket);
@@ -77,26 +74,40 @@ int main() {
   return 0;
 }
 
-
 void calculateFactorialClient(int network_socket) {
-  while (1) { 
-      // Receive the question from the server
-      char question[100];
-      recv(network_socket, question, sizeof(question), 0);
-      printf("Server: %s", question);
+  while (1) {
+    // Receive the question from the server
+    char question[100];
+    char server_response[100];
+    recv(network_socket, question, sizeof(question), 0);
+    printf("Server: %s", question);
 
-      int number;
-      scanf("%d", &number);
+    int number;
+    scanf("%d", &number);
 
-      char number_str[100];
-      sprintf(number_str, "%d", number);
+    char number_str[100];
+    sprintf(number_str, "%d", number);
 
-      send(network_socket, number_str, sizeof(number_str), 0);
+    send(network_socket, number_str, sizeof(number_str), 0);
 
-      unsigned int result;
-      recv(network_socket, &result, sizeof(result), 0);
+    recv(network_socket, server_response, sizeof(server_response), 0);
         
-      printf("Server: Factorial of %d is %u\n", number, result);
-      break; // Exit the loop
-   } 
+    while (strstr(server_response, "Error") != NULL) {
+      getchar(); //clean the input buffer. For some reason fflush(stdin) doesn't work?
+      printf("Server: %s\n", server_response); 
+      printf("Please enter a valid number: ");
+
+      scanf("%d", &number); 
+      sprintf(number_str, "%d", number); 
+
+      send(network_socket, number_str, sizeof(number_str), 0); 
+      recv(network_socket, server_response, sizeof(server_response), 0);
+
+    }
+
+    unsigned int result = atoi(server_response);
+
+    printf("Server: Factorial of %d is %d\n", number, result);
+    break; // Exit the loop
+  }
 }

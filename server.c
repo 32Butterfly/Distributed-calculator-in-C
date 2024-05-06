@@ -5,6 +5,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <stdbool.h>
+#include <ctype.h>
 
 void error (const char *msg){
   perror(msg);
@@ -14,6 +16,7 @@ void error (const char *msg){
 int getValidChoice(int client_socket);
 void choiceMenu (int answer, int client_socket);
 void calculateFactorial(int client_socket);
+bool containsOnlyNumbers(const char *str);
 
 
 int main() {
@@ -117,34 +120,53 @@ void choiceMenu(int answer, int client_socket){
 }
 
 void calculateFactorial(int client_socket){
-    
-  unsigned int answer = 1;
-  char question [100] = "Input the number of the factorial you want: ";
-  char client [100];
-  char error [100] = "Error: input the number 1 or above";
-  int number ;
+    unsigned int answer = 1;
+    char question[100] = "Input the number of the factorial you want: ";
+    char client[100];
+    char error[100] = "Error input the number 1 or above\n";
+    int number;
 
-  sleep(3);
-  send(client_socket, question, sizeof(question), 0);
-
-  read(client_socket, client, sizeof(client));
-
-  printf ("Client: wants the factorial of %s\n", client);
- 
-  number = atoi(client);
-  
-  while (number <= 0 || number > 30){
     sleep(3);
-    send(client_socket, error, sizeof(error), 0);
+    send(client_socket, question, sizeof(question), 0);
 
-    read(client_socket, client, sizeof(client));
+    while (1) {
+        read(client_socket, client, sizeof(client));
+        printf("Client: wants the factorial of %s\n", client);
 
-    number = atoi(client);
+        if (!containsOnlyNumbers(client)) {
+            sleep(3);
+            send(client_socket, error, sizeof(error), 0);
+            continue; 
+        }
+
+        number = atoi(client);
+        if (number <= 0 || number > 30) {
+            sleep(3);
+            send(client_socket, error, sizeof(error), 0);
+            continue; 
+        }
+
+        break; // Exit the loop if valid input received
+    }
+
+    for (int i = 1; i <= number; ++i){
+        answer *= i;
+    }
+
+    char result_str[100];
+    sprintf(result_str, "%u", answer);
+    send(client_socket, result_str, sizeof(result_str), 0);
+}
+
+bool containsOnlyNumbers(const char *str) {
+
+  int lenght = strlen(str);
+
+  for (int i = 0; i < lenght; ++i) {
+    if (!isdigit(str[i])) {
+      return false;
+    }
   }
 
-  for (int i = 1; i <= number; ++i){
-    answer *= i;
-  }
-
-  send (client_socket, &answer, sizeof(answer), 0);
+   return true;
 }
