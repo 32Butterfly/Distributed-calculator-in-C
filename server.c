@@ -125,42 +125,42 @@ void choiceMenu(int answer, int client_socket){
 }
 
 void calculateFactorial(int client_socket){
-    unsigned int answer = 1;
-    char question[100] = "Input the number of the factorial you want: ";
-    char client[100];
-    char error[100] = "Error input the number 1 or above\n";
-    int number;
+  unsigned int answer = 1;
+  char question[100] = "Input the number of the factorial you want: ";
+  char client[100];
+  char error[100] = "Error input the number 1 or above\n";
+  int number;
 
-    sleep(3);
-    send(client_socket, question, sizeof(question), 0);
+  sleep(3);
+  send(client_socket, question, sizeof(question), 0);
 
-    while (1) {
-        read(client_socket, client, sizeof(client));
-        printf("Client: wants the factorial of %s\n", client);
+  while (1) {
+    read(client_socket, client, sizeof(client));
+    printf("Client: wants the factorial of %s\n", client);
 
-        if (!containsOnlyNumbers(client)) {
-            sleep(3);
-            send(client_socket, error, sizeof(error), 0);
-            continue; 
-        }
-
-        number = atoi(client);
-        if (number <= 0 || number > 30) {
-            sleep(3);
-            send(client_socket, error, sizeof(error), 0);
-            continue; 
-        }
-
-        break; // Exit the loop if valid input received
+    if (!containsOnlyNumbers(client)) {
+      sleep(3);
+      send(client_socket, error, sizeof(error), 0);
+      continue; 
     }
 
-    for (int i = 1; i <= number; ++i){
-        answer *= i;
+    number = atoi(client);
+    if (number <= 0 || number > 30) {
+        sleep(3);
+        send(client_socket, error, sizeof(error), 0);
+        continue; 
     }
 
-    char result_str[100];
-    sprintf(result_str, "%u", answer);
-    send(client_socket, result_str, sizeof(result_str), 0);
+     break; // Exit the loop if valid input received
+  }
+
+  for (int i = 1; i <= number; ++i){
+    answer *= i;
+  }
+
+  char result_str[100];
+  sprintf(result_str, "%u", answer);
+  send(client_socket, result_str, sizeof(result_str), 0);
 }
 
 bool containsOnlyNumbers(const char *str) {
@@ -182,30 +182,44 @@ void findTriangleArea(int client_socket) {
   char choose3[] = "Please input the third side length: ";
   char client[100];
   char error[] = "Error: input a number 1 or above\n";
-  int sides[0];
+  int sides[3];
   int number;
+  int i = 0;
   sleep(3);
   send(client_socket, choose1, sizeof(choose1), 0);
-
-  while(1){
+ 
+  while (1) {
+    // Receive the request for the next side from the client
     read(client_socket, client, sizeof(client));
-    printf("Client: First triangle side %s\n", client);
+    printf("Client: Side %d: %s\n", i + 1, client);
 
-        if (!containsOnlyNumbers(client)) {
-            sleep(3);
-            send(client_socket, error, sizeof(error), 0);
-            continue;
-        }
-
-        number = atoi(client);
-        if (number <= 0 || number > 30) {
-            sleep(3);
-            send(client_socket, error, sizeof(error), 0);
-            continue;
-        }
-
-        break; // Exit the loop if valid input received
+    if (!containsOnlyNumbers(client)) {
+      sleep(3);
+      send(client_socket, error, sizeof(error), 0);
+      continue;
     }
+
+    number = atoi(client);
+    if (number <= 0 || number > 30) {
+        sleep(3);
+        send(client_socket, error, sizeof(error), 0);
+        continue;
+    }
+
+    sides[i] = number;
+
+    i++;
+
+    if (i == 1) {
+        send(client_socket, choose2, sizeof(choose2), 0);
+        continue;
+    } else if (i == 2) {
+        send(client_socket, choose3, sizeof(choose3), 0);
+        continue;
+    } else {
+       break;
+      }
+  }
 
   int a = sides[0], b = sides[1], c = sides[2];
   double s = (a + b + c) / 2.0;

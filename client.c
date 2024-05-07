@@ -7,8 +7,7 @@
 #include <sys/types.h>
 
 void calculateFactorialClient(int network_socket);
-void calculateTriangleAreaClient(int network_socket);
-
+void getFirstTriangleSide(int network_socket);
 int main() {
 
   //create socket
@@ -64,10 +63,17 @@ int main() {
 
      break; 
     }else if (strstr (server, "triangle") != NULL) {
-      calculateTriangleAreaClient(network_socket);
+       for(int i = 0; i < 3; ++i){
+          getFirstTriangleSide(network_socket);
+        }
+
+     recv(network_socket, server, sizeof(server), 0);
+     printf("Server: %s\n", server);
+     break;
     }
     else{
       printf("Server: please input your choice: ");
+      continue;
     }
 
   }
@@ -115,40 +121,20 @@ void calculateFactorialClient(int network_socket) {
   }
 }
 
-void calculateTriangleAreaClient(int network_socket){
+void getFirstTriangleSide(int network_socket){ 
+  char question[100];
+  char server_response[100];
 
-    while (1) {
-    // Receive the question from the server
-    char question[100];
-    char server_response[100];
-    recv(network_socket, question, sizeof(question), 0);
-    printf("Server: %s", question);
+  // Receive the prompt from the server
+  recv(network_socket, question, sizeof(question), 0);
+  printf("Server: %s", question);
 
-    int number;
-    scanf("%d", &number);
+  // Read the side length from the user
+  int number;
+  scanf("%d", &number);
 
-    char number_str[100];
-    sprintf(number_str, "%d", number);
+  char number_str[100];
+  sprintf(number_str, "%d", number);
 
-    send(network_socket, number_str, sizeof(number_str), 0);
-
-    recv(network_socket, server_response, sizeof(server_response), 0);
-
-    while (strstr(server_response, "Error") != NULL) {
-      getchar(); //clean the input buffer. For some reason fflush(stdin) doesn't work?
-      printf("Server: %s\n", server_response);
-
-      scanf("%d", &number);
-      sprintf(number_str, "%d", number);
-
-      send(network_socket, number_str, sizeof(number_str), 0);
-      recv(network_socket, server_response, sizeof(server_response), 0);
-
-    }
-
-    double result = atoi(server_response);
-
-    printf("Server: Triangle area of triange: %.2f\n", result);
-    break; // Exit the loop   
-  }
+  send(network_socket, number_str, sizeof(number_str), 0);
 }
