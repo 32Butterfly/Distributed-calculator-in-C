@@ -1,8 +1,8 @@
-#Project about distributed calculator
+## Project about distributed calculator
 
 Evaldas Dmitrišin IT 1st year 3rd group student
 
-[How the code works] 
+# **How the code works** 
 To be completed yet! Will update this section when I finish the code.
 
 In this file I will document my successes/failures and general updates about the code.
