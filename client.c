@@ -8,8 +8,13 @@
 
 void calculateFactorialClient(int network_socket);
 void getFirstTriangleSide(int network_socket);
-int main() {
 
+void error(const char *msg){
+  perror(msg);
+  exit(1);
+}
+
+int main() {
   //create socket
   int network_socket;
   int server_success;
@@ -25,20 +30,25 @@ int main() {
 
   int connection_status = connect(network_socket, (struct sockaddr *) &server_address, sizeof(server_address));
   if (connection_status < 0){
-    printf( "Error connecting to the server\n" );
-    exit(1);
+    error("Error connecting to the server\n");
   }
 
   char server_response[100];
-  recv(network_socket, server_response, sizeof(server_response), 0);
-
+  
+  if (recv(network_socket, server_response, sizeof(server_response), 0) < 0){
+    error("There was a problem recieving the response of the server");
+  } 
   printf("Server: %s\n", server_response);
 
   char testing [100] = "Hello Server!!";
 
-  send(network_socket, testing, strlen(testing), 0); 
+  if (send(network_socket, testing, strlen(testing), 0) < 0){
+    error("There was an error sending to the server");
+  } 
 
-  server_success = recv( network_socket, server, sizeof(server), 0);
+  if (recv( network_socket, server, sizeof(server), 0) < 0) {
+    error("There was an error sending to the server");
+  }
 
   printf("Server: %s", server);
 
@@ -53,7 +63,9 @@ int main() {
     send (network_socket, &response, sizeof(response), 0); 
     sleep(2); 
   
-    recv(network_socket, server, sizeof(server), 0);
+    if ( recv(network_socket, server, sizeof(server), 0) < 0){
+      error("There was an error sending to the server");
+    }
 
     printf("Server: %s\n", server);
   
@@ -62,20 +74,26 @@ int main() {
      calculateFactorialClient(network_socket); 
 
      break; 
-    }else if (strstr (server, "triangle") != NULL) {
+    }
+    else if (strstr (server, "triangle") != NULL) {
        for(int i = 0; i < 3; ++i){
           getFirstTriangleSide(network_socket);
         }
 
-     recv(network_socket, server, sizeof(server), 0);
-     printf("Server: %s\n", server);
+      if ( recv(network_socket, server, sizeof(server), 0) < 0){
+        error("There was an error sending to the server");
+      }
+
+      printf("\nServer: %s\n", server);
+      break;
+    }
+    else if (strstr (server, "something") != NULL){
      break;
     }
     else{
       printf("Server: please input your choice: ");
       continue;
     }
-
   }
   
   close(network_socket);
@@ -111,7 +129,6 @@ void calculateFactorialClient(int network_socket) {
 
       send(network_socket, number_str, sizeof(number_str), 0); 
       recv(network_socket, server_response, sizeof(server_response), 0);
-
     }
 
     unsigned int result = atoi(server_response);

@@ -22,8 +22,7 @@ void findTriangleArea(int client_socket);
 
 int main() {
   
-  char server_message[100] = "You have reached the server";
-
+  char server_message[100] = "You have reached the server!";
   char client [100];
   int client_response;
   //create socket
@@ -36,15 +35,16 @@ int main() {
   server_address.sin_port = htons(9002);
   server_address.sin_addr.s_addr = INADDR_ANY;
 
-  bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address));
+  if (bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address)) < 0){
+    error("There was a problem with binding");
+  }
 
   listen(server_socket, 5);
 
-  int client_socket;
-  client_socket = accept(server_socket, NULL, NULL);
+  int client_socket = accept(server_socket, NULL, NULL);
   
-  if (client_socket < 0){
-    error("The was a problem connecting to the socket\n");
+  if (client_socket <= 0){
+    error("There was a problem connecting to the socket\n");
   }
 
   //send the message
@@ -60,21 +60,25 @@ int main() {
 
   while(1){
 
-  char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
+    char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
 
-  send(client_socket, testing, sizeof(testing), 0);
+    if (send(client_socket, testing, sizeof(testing), 0) < 0){
+      error("There was an error sending data");
+    }
 
-  int answer = getValidChoice(client_socket);
+    int answer = getValidChoice(client_socket);
 
-  choiceMenu(answer, client_socket);
+    choiceMenu(answer, client_socket);
   
-  if ( answer == 1){
-    calculateFactorial(client_socket);
-  }else if ( answer == 2) {
-    findTriangleArea(client_socket);
-  }
-  break;
- 
+    if ( answer == 1){
+      calculateFactorial(client_socket);
+    }
+    else if ( answer == 2) {
+      findTriangleArea(client_socket);
+    }
+    else if ( answer == 3){
+      break;
+    }
  }
   //close the socket
   close(server_socket);
@@ -85,10 +89,9 @@ int main() {
 int getValidChoice(int client_socket){
   
   int answer = 0;
-  char client[10];  
+  char client[10];
 
   do {
-    
     memset(client, 0, sizeof(client));
     read(client_socket, client, sizeof(client));
     answer = atoi(client);
@@ -99,7 +102,6 @@ int getValidChoice(int client_socket){
       send(client_socket, "Incorrect choice\n", sizeof("Incorrect choice\n"), 0);
       sleep(2);
     }
-
   }while (answer < 1 || answer > 3);
 
   return answer;
@@ -109,14 +111,14 @@ void choiceMenu(int answer, int client_socket){
   
  switch(answer){
    case 1:
-      send(client_socket, "Success you chose factorial\n", sizeof("Success you chose factorial\n"), 0); 
-      break;
+     send(client_socket, "Success you chose factorial\n", sizeof("Success you chose factorial\n"), 0); 
+     break;
    case 2:
-      send(client_socket, "Success you chose triangle area\n", sizeof("Success you chose triangle area\n"), 0);
-      break;
+     send(client_socket, "Success you chose triangle area\n", sizeof("Success you chose triangle area\n"), 0);
+     break;
    case 3:
-      send(client_socket, "Success you chose something\n", sizeof("Success you chose something\n"), 0);
-      break;
+     send(client_socket, "Success you chose something\n", sizeof("Success you chose something\n"), 0);
+     break;
    default:
      send(client_socket, "Incorrect choice\nPlease input your choice\n", sizeof("Incorrect choice\nPlease input your choice\n"), 0);
      exit(1);
@@ -145,10 +147,10 @@ void calculateFactorial(int client_socket){
     }
 
     number = atoi(client);
-    if (number <= 0 || number > 30) {
-        sleep(3);
-        send(client_socket, error, sizeof(error), 0);
-        continue; 
+    if (number <= 0 || number > 12) {
+      sleep(3);
+      send(client_socket, error, sizeof(error), 0);
+      continue; 
     }
 
      break; // Exit the loop if valid input received
@@ -181,7 +183,7 @@ void findTriangleArea(int client_socket) {
   char choose2[] = "Please input the second side length: ";
   char choose3[] = "Please input the third side length: ";
   char client[100];
-  char error[] = "Error: input a number 1 or above\n";
+  char error[] = "Error input a number 1 or above\n";
   int sides[3];
   int number;
   int i = 0;
@@ -201,24 +203,25 @@ void findTriangleArea(int client_socket) {
 
     number = atoi(client);
     if (number <= 0 || number > 30) {
-        sleep(3);
-        send(client_socket, error, sizeof(error), 0);
-        continue;
+      sleep(3);
+      send(client_socket, error, sizeof(error), 0);
+      continue;
     }
 
     sides[i] = number;
-
     i++;
 
     if (i == 1) {
-        send(client_socket, choose2, sizeof(choose2), 0);
-        continue;
-    } else if (i == 2) {
-        send(client_socket, choose3, sizeof(choose3), 0);
-        continue;
-    } else {
-       break;
-      }
+      send(client_socket, choose2, sizeof(choose2), 0);
+      continue;
+    } 
+    else if (i == 2) {
+      send(client_socket, choose3, sizeof(choose3), 0);
+      continue;
+    } 
+    else {
+      break;
+    }
   }
 
   int a = sides[0], b = sides[1], c = sides[2];
