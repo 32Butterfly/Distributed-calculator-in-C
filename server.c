@@ -9,13 +9,17 @@
 #include <ctype.h>
 #include <math.h>
 
-
 int getValidChoice(int client_socket);
 void choiceMenu (int answer, int client_socket);
 void calculateFactorial(int client_socket);
 bool containsOnlyNumbers(const char *str);
 void findTriangleArea(int client_socket);
 void typeOfTriangle(int client_socket, int sides[3]);
+
+void error (const char *msg){
+  perror(msg);
+  exit(1);
+}
 
 void sendData(int network_socket, const char *data) {
   if (send(network_socket, data, strlen(data), 0) < 0) {
@@ -29,17 +33,12 @@ void readData(int network_socket, char *buffer, int buffer_size) {
   }
 }
 
-void error (const char *msg){
-  perror(msg);
-  exit(1);
-}
-
 void handleClient(int client_socket) {
   while(1){
 
     char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
 
-    sendData(client_socket,  testing);
+    sendData(client_socket, testing);
     int answer = getValidChoice(client_socket);
     choiceMenu(answer, client_socket);
 
@@ -58,63 +57,76 @@ void handleClient(int client_socket) {
 
 
 int main() {
-  
-  char server_message[100] = "You have reached the server!";
-  char client [100];
+  int server_socket, client_socket;
+  struct sockaddr_in server_address, client_address;
+  socklen_t client_address_len = sizeof(client_address);
 
-  //create socket
-  int server_socket;
+  // Create socket
   server_socket = socket(AF_INET, SOCK_STREAM, 0);
+  if (server_socket < 0) {
+    error("Error opening socket");
+  }
 
-  //specify address
-  struct sockaddr_in server_address;
+  // Specify address
   server_address.sin_family = AF_INET;
+	  server_address.sin_addr.s_addr = INADDR_ANY;
   server_address.sin_port = htons(9002);
-  server_address.sin_addr.s_addr = INADDR_ANY;
 
-  if (bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address)) < 0){
-    error("There was a problem with binding");
+  // Bind socket to address
+  if (bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
+    error("Error binding socket");
   }
 
+  // Listen for connections
   listen(server_socket, 5);
+  printf("Server listening on port 9002...\n");
 
-  int client_socket = accept(server_socket, NULL, NULL);
-  
-  if (client_socket <= 0){
-    error("There was a problem connecting to the socket\n");
+  while (1) {
+    // Accept incoming connection
+    client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_address_len);
+    if (client_socket < 0) {
+       error("Error accepting connection");
+    }
+
+     // Create a child process to handle the client
+     pid_t pid = fork();
+     if (pid < 0) {
+       error("Error forking process");
+     } else if (pid == 0) {
+       // Child process
+       close(server_socket); // Close server socket in child process
+       handleClient(client_socket);
+       close(client_socket); // Close client socket in child process
+       exit(0); // Exit child process
+     } 
+     else {
+       // Parent process
+       close(client_socket); // Close client socket in parent process
+     }
   }
 
-  //send the message
-  sendData(client_socket, server_message);
-  readData(client_socket, client, sizeof(client));
-  printf("Client: %s\n", client);
-
-  //handle the client
-  handleClient(client_socket); 
-
-  //close the socket
+  // Close server socket
   close(server_socket);
 
   return 0;
 }
 
 int getValidChoice(int client_socket){
-  
-  int answer = 0;
+  int answer;
   char client[10];
 
-  do {
-    memset(client, 0, sizeof(client));
-    readData(client_socket, client, sizeof(client));
-    answer = atoi(client);
+  readData(client_socket, client, sizeof(client));
+  answer = atoi(client);
 
-    printf("Client chose option: %d\n", answer);
+   printf("Client chose option: %d\n", answer);
 
-    if (answer < 1 || answer > 3) {
-      sendData(client_socket, "Incorrect choice\n");
-      sleep(2);
-    }
-  }while (answer < 1 || answer > 3);
+   while(answer < 1 || answer > 3){
+     sendData(client_socket, "Incorrect choice\n");
+     sleep(2);
+     bzero(client, sizeof(client));
+     readData(client_socket, client, sizeof(client));
+     answer = atoi(client);
+   }
 
   return answer;
 }
@@ -151,6 +163,7 @@ void calculateFactorial(int client_socket){
     if (!containsOnlyNumbers(client)) {
       sleep(3);
       sendData(client_socket, error);
+      bzero(client, sizeof(client));
       continue; 
     }
 
@@ -158,6 +171,7 @@ void calculateFactorial(int client_socket){
     if (number <= 0 || number > 12) {
       sleep(3);
       sendData(client_socket, error);
+      bzero(client, sizeof(client));
       continue; 
     }
 
@@ -206,6 +220,7 @@ void findTriangleArea(int client_socket) {
     if (!containsOnlyNumbers(client)) {
       sleep(3);
       sendData(client_socket, error);
+      bzero(client, sizeof(client));
       continue;
     }
 
@@ -213,18 +228,20 @@ void findTriangleArea(int client_socket) {
     if (number <= 0 || number > 100) {
       sleep(3);
       sendData(client_socket, error);
+      bzero(client, sizeof(client));
       continue;
     }
 
     sides[i] = number;
-    i++;
 
-    if (i == 1) {
+    if (i == 0) {
       sendData(client_socket, choose2);
+      i++;
       continue;
     } 
-    else if (i == 2) {
+    else if (i == 1) {
       sendData(client_socket, choose3);
+      i++;
       continue;
     } 
     else {

@@ -6,9 +6,10 @@ Evaldas Dmitrišin IT 1st year 3rd group student
 
 1. Clone this repository!
 2. In your local machine go into the task3 direcotory
-3. Run make to create executable files
+3. Type: 'make' in the terminal to create executable files
 4. In the first terminal run ./server
 5. In the other terminals run ./client
+6. In order to remove the compiled files run in the terminal 'make clean'
 
 In this file I will document my successes/failures and general updates about the code.
 
@@ -41,3 +42,6 @@ whether it's a simple calculator or something else.
 
 Refactored the code as well as made it so the triangle area calculation also prints what kind of triangle it is based on the lenghts of the sides. Will start trying to implement the forking
 Time spent 45 minutes.
+
+Alright I managed to make it so that the server is forked for each user. There was a lot of bugs from the previous version such as not having cleared variable and so on. Even now it has a
+lot of bugs that need to be fixed. Time spent ~1 hour.

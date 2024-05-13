@@ -47,7 +47,7 @@ int main() {
   }
 
   char server_response[100];
-  
+
   readData (network_socket, server_response, sizeof(server_response));
   printf("Server: %s\n", server_response);
 
@@ -62,10 +62,10 @@ int main() {
   int factorial;
 
   while (1){
-    
+
     memset(server, 0, sizeof(server));
     scanf(" %c", &response);
-    send (network_socket, &response, sizeof(response), 0); 
+    send (network_socket, &response, sizeof(response), 0);
 
     sleep(2);
     readData (network_socket, server, sizeof(server));
@@ -73,7 +73,7 @@ int main() {
 
     if (strstr(server, "factorial") != NULL) {
 
-     calculateFactorialClient(network_socket); 
+     calculateFactorialClient(network_socket);
      break;
     }
     else if (strstr (server, "triangle") != NULL) {
@@ -81,7 +81,8 @@ int main() {
           sleep(1);
           getFirstTriangleSide(network_socket);
         }
-
+       
+      sleep(1);
       readData (network_socket, server, sizeof(server));
       printf("\nServer: %s\n", server);
       break;
@@ -94,7 +95,7 @@ int main() {
       continue;
     }
   }
-  
+
   close(network_socket);
 
   return 0;
@@ -118,17 +119,22 @@ void calculateFactorialClient(int network_socket) {
     readData(network_socket, server_response, sizeof(server_response));
         
     while (strstr(server_response, "Error") != NULL) {
-      getchar(); //clean the input buffer. For some reason fflush(stdin) doesn't work?
-      printf("Server: %s\n", server_response); 
-      printf("Please enter a valid number: ");
+       printf("Server: %s\n", server_response);
+       printf("Please enter a valid number: ");
 
-      scanf("%d", &number); 
-      sprintf(number_str, "%d", number); 
+       // Clear input buffer
+       while (getchar() != '\n');
 
-      sendData(network_socket, number_str); 
-      readData (network_socket, server_response, sizeof(server_response));
+       // Read input as a string again
+       scanf("%s", number_str);
+
+       // Convert string to integer again
+       number = atoi(number_str);
+
+       // Send the corrected number to the server
+       sendData(network_socket, number_str);
+       readData(network_socket, server_response, sizeof(server_response));
     }
-
     unsigned int result = atoi(server_response);
 
     printf("Server: Factorial of %d is %d\n", number, result);
@@ -140,15 +146,15 @@ void getFirstTriangleSide(int network_socket){
   char question[100];
   char server_response[100];
 
-  // Receive the prompt from the server
+    // Receive the prompt from the server
   readData (network_socket, question, sizeof(question));
   printf("Server: %s", question);
 
-  // Read the side length from the user
-  int number;
-  scanf("%d", &number);
-
-  char numberStr[100];
-  sprintf(numberStr, "%d", number);
-  sendData(network_socket, numberStr);
+    // Read the side length from the user
+    int number;
+    scanf("%d", &number);
+ 
+    char numberStr[100];
+    sprintf(numberStr, "%d", number);
+    sendData(network_socket, numberStr);
 }
