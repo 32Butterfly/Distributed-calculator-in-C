@@ -3,7 +3,12 @@
 Evaldas Dmitrišin IT 1st year 3rd group student
 
 ## **How the code works** 
-To be completed yet! Will update this section when I finish the code.
+
+1. Clone this repository!
+2. In your local machine go into the task3 direcotory
+3. Run make to create executable files
+4. In the first terminal run ./server
+5. In the other terminals run ./client
 
 In this file I will document my successes/failures and general updates about the code.
 
@@ -26,3 +31,10 @@ instead of gcc client.c -o client. So this will make sure I never make this mist
 ### 2024/05/07
 Made it so the make file uses -lm flag for Makefile so now it can utilize the sqrt function otherwise it would not work. Also made it so the code works for the second option so now it
 calculates the triangle area. The error handaling is not working yet and I plan to also make it so it displays what kind of triangle it is.
+
+### 2024/05/08
+Played around with the markdown language. Also made error checkings for sending and recieving data. However ultimetely I will change it because there is a lot of redundant code.
+
+### 2024/05/13
+Made new functions for recieving and sending data which checks whether or not they were succefull making the code more error proof. I'm currently thinking what the third operation should be
+whether it's a simple calculator or something else.

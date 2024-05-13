@@ -14,6 +14,12 @@ void error(const char *msg){
   exit(1);
 }
 
+void sendData(int network_socket, const char *data) {
+  if (send(network_socket, data, strlen(data), 0) < 0) {
+    error("Error sending data to the server"); 
+  }
+}
+
 int main() {
   //create socket
   int network_socket;
@@ -42,12 +48,10 @@ int main() {
 
   char testing [100] = "Hello Server!!";
 
-  if (send(network_socket, testing, strlen(testing), 0) < 0){
-    error("There was an error sending to the server");
-  } 
+  sendData(network_socket, testing);
 
   if (recv( network_socket, server, sizeof(server), 0) < 0) {
-    error("There was an error sending to the server");
+        error("There was an error sending to the server");
   }
 
   printf("Server: %s", server);
@@ -77,6 +81,7 @@ int main() {
     }
     else if (strstr (server, "triangle") != NULL) {
        for(int i = 0; i < 3; ++i){
+          sleep(1);
           getFirstTriangleSide(network_socket);
         }
 

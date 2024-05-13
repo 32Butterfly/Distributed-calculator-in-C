@@ -20,11 +20,23 @@ void calculateFactorial(int client_socket);
 bool containsOnlyNumbers(const char *str);
 void findTriangleArea(int client_socket);
 
+void sendData(int network_socket, const char *data) {
+  if (send(network_socket, data, strlen(data), 0) < 0) {
+    error("Error sending data to the client");
+  }
+}
+
+void readData(int network_socket, char *buffer, int buffer_size) {
+  if (recv(network_socket, buffer, buffer_size, 0) < 0) {
+    error("Error receiving data from the client");
+  }
+}
+
 int main() {
   
   char server_message[100] = "You have reached the server!";
   char client [100];
-  int client_response;
+
   //create socket
   int server_socket;
   server_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -48,13 +60,9 @@ int main() {
   }
 
   //send the message
-  send(client_socket, server_message, sizeof(server_message), 0 );
+  sendData(client_socket, server_message);
 
-  client_response = read(client_socket, client, 100);
-
-  if (client_response < 0){
-    error("There was a problem reading data\n");
-  }
+  readData(client_socket, client, sizeof(client));
 
   printf("Client: %s\n", client);
 
@@ -62,9 +70,7 @@ int main() {
 
     char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
 
-    if (send(client_socket, testing, sizeof(testing), 0) < 0){
-      error("There was an error sending data");
-    }
+    sendData(client_socket,  testing);
 
     int answer = getValidChoice(client_socket);
 
@@ -79,6 +85,7 @@ int main() {
     else if ( answer == 3){
       break;
     }
+  break;
  }
   //close the socket
   close(server_socket);
@@ -93,13 +100,13 @@ int getValidChoice(int client_socket){
 
   do {
     memset(client, 0, sizeof(client));
-    read(client_socket, client, sizeof(client));
+    readData(client_socket, client, sizeof(client));
     answer = atoi(client);
 
     printf("Client chose option: %d\n", answer);
 
     if (answer < 1 || answer > 3) {
-      send(client_socket, "Incorrect choice\n", sizeof("Incorrect choice\n"), 0);
+      sendData(client_socket, "Incorrect choice\n");
       sleep(2);
     }
   }while (answer < 1 || answer > 3);
@@ -111,17 +118,13 @@ void choiceMenu(int answer, int client_socket){
   
  switch(answer){
    case 1:
-     send(client_socket, "Success you chose factorial\n", sizeof("Success you chose factorial\n"), 0); 
+     sendData(client_socket, "Success you chose factorial\n");
      break;
    case 2:
-     send(client_socket, "Success you chose triangle area\n", sizeof("Success you chose triangle area\n"), 0);
+     sendData(client_socket, "Success you chose triangle area\n");
      break;
    case 3:
-     send(client_socket, "Success you chose something\n", sizeof("Success you chose something\n"), 0);
-     break;
-   default:
-     send(client_socket, "Incorrect choice\nPlease input your choice\n", sizeof("Incorrect choice\nPlease input your choice\n"), 0);
-     exit(1);
+     sendData(client_socket, "Success you chose something\n");
      break;
   }
 }
@@ -134,22 +137,22 @@ void calculateFactorial(int client_socket){
   int number;
 
   sleep(3);
-  send(client_socket, question, sizeof(question), 0);
+  sendData(client_socket, question);
 
   while (1) {
-    read(client_socket, client, sizeof(client));
+    readData(client_socket, client, sizeof(client));
     printf("Client: wants the factorial of %s\n", client);
 
     if (!containsOnlyNumbers(client)) {
       sleep(3);
-      send(client_socket, error, sizeof(error), 0);
+      sendData(client_socket, error);
       continue; 
     }
 
     number = atoi(client);
     if (number <= 0 || number > 12) {
       sleep(3);
-      send(client_socket, error, sizeof(error), 0);
+      sendData(client_socket, error);
       continue; 
     }
 
@@ -160,9 +163,9 @@ void calculateFactorial(int client_socket){
     answer *= i;
   }
 
-  char result_str[100];
-  sprintf(result_str, "%u", answer);
-  send(client_socket, result_str, sizeof(result_str), 0);
+  char resultStr[100];
+  sprintf(resultStr, "%u", answer);
+  sendData(client_socket, resultStr);
 }
 
 bool containsOnlyNumbers(const char *str) {
@@ -179,32 +182,32 @@ bool containsOnlyNumbers(const char *str) {
 }
 
 void findTriangleArea(int client_socket) {
-  char choose1[] = "Please input the first side length: ";
-  char choose2[] = "Please input the second side length: ";
-  char choose3[] = "Please input the third side length: ";
+  char choose1[50] = "Please input the first side length: ";
+  char choose2[50] = "Please input the second side length: ";
+  char choose3[50] = "Please input the third side length: ";
   char client[100];
   char error[] = "Error input a number 1 or above\n";
   int sides[3];
   int number;
   int i = 0;
   sleep(3);
-  send(client_socket, choose1, sizeof(choose1), 0);
+  sendData(client_socket, choose1); 
  
   while (1) {
     // Receive the request for the next side from the client
-    read(client_socket, client, sizeof(client));
+    readData(client_socket, client, sizeof(client));
     printf("Client: Side %d: %s\n", i + 1, client);
 
     if (!containsOnlyNumbers(client)) {
       sleep(3);
-      send(client_socket, error, sizeof(error), 0);
+      sendData(client_socket, error);
       continue;
     }
 
     number = atoi(client);
     if (number <= 0 || number > 30) {
       sleep(3);
-      send(client_socket, error, sizeof(error), 0);
+      sendData(client_socket, error);
       continue;
     }
 
@@ -212,11 +215,11 @@ void findTriangleArea(int client_socket) {
     i++;
 
     if (i == 1) {
-      send(client_socket, choose2, sizeof(choose2), 0);
+      sendData(client_socket, choose2);
       continue;
     } 
     else if (i == 2) {
-      send(client_socket, choose3, sizeof(choose3), 0);
+      sendData(client_socket, choose3);
       continue;
     } 
     else {
@@ -228,7 +231,7 @@ void findTriangleArea(int client_socket) {
   double s = (a + b + c) / 2.0;
   double area = sqrt(s * (s - a) * (s - b) * (s - c));
 
-  char area_str[100];
-  sprintf(area_str, "Area of the triangle: %.2f\n", area);
-  send(client_socket, area_str, sizeof(area_str), 0);
+  char areaStr[100];
+  sprintf(areaStr, "Area of the triangle: %.2f\n", area);
+  sendData(client_socket, areaStr);
 }
