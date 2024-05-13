@@ -38,3 +38,6 @@ Played around with the markdown language. Also made error checkings for sending 
 ### 2024/05/13
 Made new functions for recieving and sending data which checks whether or not they were succefull making the code more error proof. I'm currently thinking what the third operation should be
 whether it's a simple calculator or something else.
+
+Refactored the code as well as made it so the triangle area calculation also prints what kind of triangle it is based on the lenghts of the sides. Will start trying to implement the forking
+Time spent 45 minutes.

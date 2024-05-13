@@ -20,6 +20,12 @@ void sendData(int network_socket, const char *data) {
   }
 }
 
+void readData(int network_socket, char *buffer, int buffer_size) {
+  if (recv(network_socket, buffer, buffer_size, 0) < 0) {
+    error("Error receiving data from the server");
+  }
+}
+
 int main() {
   //create socket
   int network_socket;
@@ -35,24 +41,20 @@ int main() {
   server_address.sin_addr.s_addr = INADDR_ANY;
 
   int connection_status = connect(network_socket, (struct sockaddr *) &server_address, sizeof(server_address));
+
   if (connection_status < 0){
     error("Error connecting to the server\n");
   }
 
   char server_response[100];
   
-  if (recv(network_socket, server_response, sizeof(server_response), 0) < 0){
-    error("There was a problem recieving the response of the server");
-  } 
+  readData (network_socket, server_response, sizeof(server_response));
   printf("Server: %s\n", server_response);
 
   char testing [100] = "Hello Server!!";
 
   sendData(network_socket, testing);
-
-  if (recv( network_socket, server, sizeof(server), 0) < 0) {
-        error("There was an error sending to the server");
-  }
+  readData(network_socket, server, sizeof(server));
 
   printf("Server: %s", server);
 
@@ -63,21 +65,16 @@ int main() {
     
     memset(server, 0, sizeof(server));
     scanf(" %c", &response);
-
     send (network_socket, &response, sizeof(response), 0); 
-    sleep(2); 
-  
-    if ( recv(network_socket, server, sizeof(server), 0) < 0){
-      error("There was an error sending to the server");
-    }
 
+    sleep(2);
+    readData (network_socket, server, sizeof(server));
     printf("Server: %s\n", server);
-  
+
     if (strstr(server, "factorial") != NULL) {
 
      calculateFactorialClient(network_socket); 
-
-     break; 
+     break;
     }
     else if (strstr (server, "triangle") != NULL) {
        for(int i = 0; i < 3; ++i){
@@ -85,10 +82,7 @@ int main() {
           getFirstTriangleSide(network_socket);
         }
 
-      if ( recv(network_socket, server, sizeof(server), 0) < 0){
-        error("There was an error sending to the server");
-      }
-
+      readData (network_socket, server, sizeof(server));
       printf("\nServer: %s\n", server);
       break;
     }
@@ -111,7 +105,7 @@ void calculateFactorialClient(int network_socket) {
     // Receive the question from the server
     char question[100];
     char server_response[100];
-    recv(network_socket, question, sizeof(question), 0);
+    readData (network_socket, question, sizeof(question));
     printf("Server: %s", question);
 
     int number;
@@ -120,9 +114,8 @@ void calculateFactorialClient(int network_socket) {
     char number_str[100];
     sprintf(number_str, "%d", number);
 
-    send(network_socket, number_str, sizeof(number_str), 0);
-
-    recv(network_socket, server_response, sizeof(server_response), 0);
+    sendData(network_socket, number_str);
+    readData(network_socket, server_response, sizeof(server_response));
         
     while (strstr(server_response, "Error") != NULL) {
       getchar(); //clean the input buffer. For some reason fflush(stdin) doesn't work?
@@ -132,8 +125,8 @@ void calculateFactorialClient(int network_socket) {
       scanf("%d", &number); 
       sprintf(number_str, "%d", number); 
 
-      send(network_socket, number_str, sizeof(number_str), 0); 
-      recv(network_socket, server_response, sizeof(server_response), 0);
+      sendData(network_socket, number_str); 
+      readData (network_socket, server_response, sizeof(server_response));
     }
 
     unsigned int result = atoi(server_response);
@@ -148,15 +141,14 @@ void getFirstTriangleSide(int network_socket){
   char server_response[100];
 
   // Receive the prompt from the server
-  recv(network_socket, question, sizeof(question), 0);
+  readData (network_socket, question, sizeof(question));
   printf("Server: %s", question);
 
   // Read the side length from the user
   int number;
   scanf("%d", &number);
 
-  char number_str[100];
-  sprintf(number_str, "%d", number);
-
-  send(network_socket, number_str, sizeof(number_str), 0);
+  char numberStr[100];
+  sprintf(numberStr, "%d", number);
+  sendData(network_socket, numberStr);
 }

@@ -9,16 +9,13 @@
 #include <ctype.h>
 #include <math.h>
 
-void error (const char *msg){
-  perror(msg);
-  exit(1);
-}
 
 int getValidChoice(int client_socket);
 void choiceMenu (int answer, int client_socket);
 void calculateFactorial(int client_socket);
 bool containsOnlyNumbers(const char *str);
 void findTriangleArea(int client_socket);
+void typeOfTriangle(int client_socket, int sides[3]);
 
 void sendData(int network_socket, const char *data) {
   if (send(network_socket, data, strlen(data), 0) < 0) {
@@ -31,6 +28,34 @@ void readData(int network_socket, char *buffer, int buffer_size) {
     error("Error receiving data from the client");
   }
 }
+
+void error (const char *msg){
+  perror(msg);
+  exit(1);
+}
+
+void handleClient(int client_socket) {
+  while(1){
+
+    char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
+
+    sendData(client_socket,  testing);
+    int answer = getValidChoice(client_socket);
+    choiceMenu(answer, client_socket);
+
+    if ( answer == 1){
+      calculateFactorial(client_socket);
+    }
+    else if ( answer == 2) {
+      findTriangleArea(client_socket);
+    }
+    else if ( answer == 3){
+      break;
+    }
+  break;
+  }
+}
+
 
 int main() {
   
@@ -61,32 +86,12 @@ int main() {
 
   //send the message
   sendData(client_socket, server_message);
-
   readData(client_socket, client, sizeof(client));
-
   printf("Client: %s\n", client);
 
-  while(1){
+  //handle the client
+  handleClient(client_socket); 
 
-    char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)something?\nPlease input your choice: ";
-
-    sendData(client_socket,  testing);
-
-    int answer = getValidChoice(client_socket);
-
-    choiceMenu(answer, client_socket);
-  
-    if ( answer == 1){
-      calculateFactorial(client_socket);
-    }
-    else if ( answer == 2) {
-      findTriangleArea(client_socket);
-    }
-    else if ( answer == 3){
-      break;
-    }
-  break;
- }
   //close the socket
   close(server_socket);
 
@@ -205,7 +210,7 @@ void findTriangleArea(int client_socket) {
     }
 
     number = atoi(client);
-    if (number <= 0 || number > 30) {
+    if (number <= 0 || number > 100) {
       sleep(3);
       sendData(client_socket, error);
       continue;
@@ -234,4 +239,22 @@ void findTriangleArea(int client_socket) {
   char areaStr[100];
   sprintf(areaStr, "Area of the triangle: %.2f\n", area);
   sendData(client_socket, areaStr);
+
+  typeOfTriangle(client_socket, sides); 
+}
+
+void typeOfTriangle(int client_socket, int sides[3]){
+  char equilateral[50] = "The triangle is an equilateral one\n";
+  char isosceles [50] = "The triangle is an isosceles one\n";
+  char scalene[50] = "The triangle is a scalene one\n"; 
+
+  if ( sides[0] == sides[1] && sides[1] == sides[2]){
+    sendData(client_socket, equilateral);
+  }
+  else if (sides[0] == sides[1] || sides[0] == sides[2] || sides[1] == sides[2]){
+    sendData(client_socket, isosceles);
+  }
+  else{
+    sendData(client_socket, scalene);
+  }
 }
