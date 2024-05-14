@@ -45,3 +45,7 @@ Time spent 45 minutes.
 
 Alright I managed to make it so that the server is forked for each user. There was a lot of bugs from the previous version such as not having cleared variable and so on. Even now it has a
 lot of bugs that need to be fixed. Time spent ~1 hour.
+
+### 2024/05/14
+Added simple signaling and bug fixes. It turns out the bugs from the simple hello server message which I forgot to remove and spent 1 hour on this :/ Anyways aside from that made sure the
+buffer is cleared inside the triangleArea calculation

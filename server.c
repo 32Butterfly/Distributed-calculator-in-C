@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <math.h>
+#include <signal.h>
 
 int getValidChoice(int client_socket);
 void choiceMenu (int answer, int client_socket);
@@ -31,6 +32,16 @@ void readData(int network_socket, char *buffer, int buffer_size) {
   if (recv(network_socket, buffer, buffer_size, 0) < 0) {
     error("Error receiving data from the client");
   }
+}
+
+void handle_sigint(int sig) {
+  static int count = 0;
+  count++;
+  printf("\nTried to exit %d time(s).\n", count);
+    if (count >= 3) {
+        printf("Exiting server...\n");
+        exit(EXIT_SUCCESS);
+    }
 }
 
 void handleClient(int client_socket) {
@@ -69,7 +80,7 @@ int main() {
 
   // Specify address
   server_address.sin_family = AF_INET;
-	  server_address.sin_addr.s_addr = INADDR_ANY;
+  server_address.sin_addr.s_addr = INADDR_ANY;
   server_address.sin_port = htons(9002);
 
   // Bind socket to address
@@ -80,8 +91,9 @@ int main() {
   // Listen for connections
   listen(server_socket, 5);
   printf("Server listening on port 9002...\n");
+ 
+  while(1){ 
 
-  while (1) {
     // Accept incoming connection
     client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_address_len);
     if (client_socket < 0) {
@@ -96,15 +108,14 @@ int main() {
        // Child process
        close(server_socket); // Close server socket in child process
        handleClient(client_socket);
-       close(client_socket); // Close client socket in child process
        exit(0); // Exit child process
      } 
      else {
        // Parent process
-       close(client_socket); // Close client socket in parent process
+       signal(SIGINT, handle_sigint);
+       close(client_socket);
      }
   }
-
   // Close server socket
   close(server_socket);
 
@@ -115,18 +126,22 @@ int getValidChoice(int client_socket){
   int answer;
   char client[10];
 
+
   readData(client_socket, client, sizeof(client));
+
+  printf("Received message from client: %s\n", client);
+
   answer = atoi(client);
 
-   printf("Client chose option: %d\n", answer);
+  while(answer < 1 || answer > 3){
+    sendData(client_socket, "Incorrect choice\n");
+    sleep(2);
+    bzero(client, sizeof(client));
+    readData(client_socket, client, sizeof(client));
+    answer = atoi(client);
+  }
 
-   while(answer < 1 || answer > 3){
-     sendData(client_socket, "Incorrect choice\n");
-     sleep(2);
-     bzero(client, sizeof(client));
-     readData(client_socket, client, sizeof(client));
-     answer = atoi(client);
-   }
+  printf("Client chose option: %d\n", answer);
 
   return answer;
 }
@@ -212,7 +227,7 @@ void findTriangleArea(int client_socket) {
   sleep(3);
   sendData(client_socket, choose1); 
  
-  while (1) {
+  while (i < 3) {
     // Receive the request for the next side from the client
     readData(client_socket, client, sizeof(client));
     printf("Client: Side %d: %s\n", i + 1, client);
@@ -224,30 +239,23 @@ void findTriangleArea(int client_socket) {
       continue;
     }
 
-    number = atoi(client);
-    if (number <= 0 || number > 100) {
-      sleep(3);
-      sendData(client_socket, error);
-      bzero(client, sizeof(client));
-      continue;
-    }
+        number = atoi(client);
+        if (number <= 0 || number > 100) {
+            sleep(3);
+            sendData(client_socket, error);
+            bzero(client, sizeof(client));
+            continue;
+        }
 
-    sides[i] = number;
+        sides[i] = number;
 
-    if (i == 0) {
-      sendData(client_socket, choose2);
-      i++;
-      continue;
-    } 
-    else if (i == 1) {
-      sendData(client_socket, choose3);
-      i++;
-      continue;
-    } 
-    else {
-      break;
+        if (i == 0) {
+            sendData(client_socket, choose2);
+        } else if (i == 1) {
+            sendData(client_socket, choose3);
+        }
+        i++;
     }
-  }
 
   int a = sides[0], b = sides[1], c = sides[2];
   double s = (a + b + c) / 2.0;

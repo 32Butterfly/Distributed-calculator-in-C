@@ -51,9 +51,9 @@ int main() {
   readData (network_socket, server_response, sizeof(server_response));
   printf("Server: %s\n", server_response);
 
-  char testing [100] = "Hello Server!!";
+//  char testing [100] = "Hello Server!!";
 
-  sendData(network_socket, testing);
+ // sendData(network_socket, testing);
   readData(network_socket, server, sizeof(server));
 
   printf("Server: %s", server);
@@ -63,7 +63,7 @@ int main() {
 
   while (1){
 
-    memset(server, 0, sizeof(server));
+    bzero(server, sizeof(server));
     scanf(" %c", &response);
     send (network_socket, &response, sizeof(response), 0);
 
@@ -122,8 +122,7 @@ void calculateFactorialClient(int network_socket) {
        printf("Server: %s\n", server_response);
        printf("Please enter a valid number: ");
 
-       // Clear input buffer
-       while (getchar() != '\n');
+       bzero(number_str, sizeof(number_str));
 
        // Read input as a string again
        scanf("%s", number_str);
@@ -144,11 +143,11 @@ void calculateFactorialClient(int network_socket) {
 
 void getFirstTriangleSide(int network_socket){ 
   char question[100];
-  char server_response[100];
 
     // Receive the prompt from the server
-  readData (network_socket, question, sizeof(question));
-  printf("Server: %s", question);
+    bzero(question, sizeof(question));
+    readData (network_socket, question, sizeof(question));
+    printf("Server: %s", question);
 
     // Read the side length from the user
     int number;
