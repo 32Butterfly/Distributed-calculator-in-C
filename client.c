@@ -46,17 +46,10 @@ int main() {
     error("Error connecting to the server\n");
   }
 
-  char server_response[100];
+  char server_response[150];
 
   readData (network_socket, server_response, sizeof(server_response));
-  printf("Server: %s\n", server_response);
-
-//  char testing [100] = "Hello Server!!";
-
- // sendData(network_socket, testing);
-  readData(network_socket, server, sizeof(server));
-
-  printf("Server: %s", server);
+  printf("Server: %s", server_response);
 
   char response;
   int factorial;
@@ -64,7 +57,7 @@ int main() {
   while (1){
 
     bzero(server, sizeof(server));
-    scanf(" %c", &response);
+    scanf("%c", &response);
     send (network_socket, &response, sizeof(response), 0);
 
     sleep(2);
@@ -81,13 +74,13 @@ int main() {
           sleep(1);
           getFirstTriangleSide(network_socket);
         }
-       
+
       sleep(1);
       readData (network_socket, server, sizeof(server));
       printf("\nServer: %s\n", server);
       break;
     }
-    else if (strstr (server, "something") != NULL){
+    else if (strstr (server, "Exit") != NULL){
      break;
     }
     else{
@@ -117,7 +110,7 @@ void calculateFactorialClient(int network_socket) {
 
     sendData(network_socket, number_str);
     readData(network_socket, server_response, sizeof(server_response));
-        
+
     while (strstr(server_response, "Error") != NULL) {
        printf("Server: %s\n", server_response);
        printf("Please enter a valid number: ");
@@ -141,19 +134,19 @@ void calculateFactorialClient(int network_socket) {
   }
 }
 
-void getFirstTriangleSide(int network_socket){ 
+void getFirstTriangleSide(int network_socket){
   char question[100];
 
-    // Receive the prompt from the server
-    bzero(question, sizeof(question));
-    readData (network_socket, question, sizeof(question));
-    printf("Server: %s", question);
+  // Receive the prompt from the server
+  bzero(question, sizeof(question));
+  readData (network_socket, question, sizeof(question));
+  printf("Server: %s", question);
 
-    // Read the side length from the user
-    int number;
-    scanf("%d", &number);
- 
-    char numberStr[100];
-    sprintf(numberStr, "%d", number);
-    sendData(network_socket, numberStr);
+  // Read the side length from the user
+  int number;
+  scanf("%d", &number);
+
+  char numberStr[100];
+  sprintf(numberStr, "%d", number);
+  sendData(network_socket, numberStr);
 }

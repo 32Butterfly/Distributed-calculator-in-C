@@ -2,7 +2,7 @@
 
 Evaldas Dmitrišin IT 1st year 3rd group student
 
-## **How the code works** 
+## **How to use the code** 
 
 1. Clone this repository!
 2. In your local machine go into the task3 direcotory
@@ -11,7 +11,14 @@ Evaldas Dmitrišin IT 1st year 3rd group student
 5. In the other terminals run ./client
 6. In order to remove the compiled files run in the terminal 'make clean'
 
-In this file I will document my successes/failures and general updates about the code.
+## **How the code works**
+This code use simple socket communication. It communicates via strings and numbers. First the client is given a choice menu. The client has to input the corresponding number. Which is then
+validated by the child server process. If the input was correct aka 1-3 then child server sends the client back a Success you chose "option" string. By this option we determine what will be done.
+The code distinguishes what needs to be done by using strstr which checks if the response contains the "option" in the response string. Then we proceed with the option and ask for client
+input. The input is once again validated by the child server. And if the input is correct we pipe the number which has to be calculated to the main server where the calculation will be
+done. We then pipe back the result to the child process which sends the response to the client with the result.
+
+### Below I will document my successes/failures and general updates about the code.
 
 ### 2024/05/03
 I played around a bit with sockets and server/client functionality. Have not included a loop so the converstation goes on forever nor have I made any actual functionality but played around
@@ -49,3 +56,7 @@ lot of bugs that need to be fixed. Time spent ~1 hour.
 ### 2024/05/14
 Added simple signaling and bug fixes. It turns out the bugs from the simple hello server message which I forgot to remove and spent 1 hour on this :/ Anyways aside from that made sure the
 buffer is cleared inside the triangleArea calculation
+
+### 2024/05/16
+I added my first pipe for factorial. Will do the same with the Triangle area later today. Also remade the factorial calculation function. Also later plan for today is to add the option
+for specifying in the command line what the ip and port is so we can have not just localhost communication but also from vm to vm
