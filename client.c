@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <netdb.h>
 
 void calculateFactorialClient(int network_socket);
 void getFirstTriangleSide(int network_socket);
@@ -26,19 +27,32 @@ void readData(int network_socket, char *buffer, int buffer_size) {
   }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   //create socket
-  int network_socket;
-  int server_success;
+  int network_socket, server_success, portnumber;
+
+  if (argc < 3){
+    fprintf(stderr, "Usage: %s hostname portnumber\n", argv[0]);
+    exit(1);
+  }
 
   char server [150];
   network_socket = socket(AF_INET, SOCK_STREAM, 0);
 
+  portnumber = atoi(argv[2]);
+  struct hostent *Server = gethostbyname(argv[1]);
+    if (Server == NULL) {
+        fprintf(stderr, "Error: No such host exists\n");
+        exit(1);
+    }
+
   //specify address
   struct sockaddr_in server_address;
+  Server = gethostbyname(argv[1]);
+  bzero(( char *) &server_address, sizeof(server_address));
   server_address.sin_family = AF_INET;
-  server_address.sin_port = htons(9002);
-  server_address.sin_addr.s_addr = INADDR_ANY;
+  server_address.sin_port = htons(portnumber);
+  bcopy((char *)Server->h_addr, (char *)&server_address.sin_addr.s_addr, Server->h_length);
 
   int connection_status = connect(network_socket, (struct sockaddr *) &server_address, sizeof(server_address));
 
@@ -60,7 +74,7 @@ int main() {
     scanf("%c", &response);
     send (network_socket, &response, sizeof(response), 0);
 
-    sleep(2);
+    sleep(1);
     readData (network_socket, server, sizeof(server));
     printf("Server: %s\n", server);
 
@@ -71,7 +85,6 @@ int main() {
     }
     else if (strstr (server, "triangle") != NULL) {
        for(int i = 0; i < 3; ++i){
-          sleep(1);
           getFirstTriangleSide(network_socket);
         }
 

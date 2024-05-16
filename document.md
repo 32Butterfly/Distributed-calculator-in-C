@@ -7,12 +7,12 @@ Evaldas Dmitrišin IT 1st year 3rd group student
 1. Clone this repository!
 2. In your local machine go into the task3 direcotory
 3. Type: 'make' in the terminal to create executable files
-4. In the first terminal run ./server
-5. In the other terminals run ./client
+4. In the first terminal run ./server portnumber
+5. In the other terminals run ./client host portnumber. If you are running this server and client on the same machine run localhost for the host option
 6. In order to remove the compiled files run in the terminal 'make clean'
 
 ## **How the code works**
-This code use simple socket communication. It communicates via strings and numbers. First the client is given a choice menu. The client has to input the corresponding number. Which is then
+This code uses simple socket communication. It communicates via strings and numbers. First the client is given a choice menu. The client has to input the corresponding number. Which is then
 validated by the child server process. If the input was correct aka 1-3 then child server sends the client back a Success you chose "option" string. By this option we determine what will be done.
 The code distinguishes what needs to be done by using strstr which checks if the response contains the "option" in the response string. Then we proceed with the option and ask for client
 input. The input is once again validated by the child server. And if the input is correct we pipe the number which has to be calculated to the main server where the calculation will be
@@ -60,3 +60,6 @@ buffer is cleared inside the triangleArea calculation
 ### 2024/05/16
 I added my first pipe for factorial. Will do the same with the Triangle area later today. Also remade the factorial calculation function. Also later plan for today is to add the option
 for specifying in the command line what the ip and port is so we can have not just localhost communication but also from vm to vm
+
+I managed to make the piping work for AreaCalculation as well. As well as making that the script takes in the portnumber and the host for client. It works on the 1 machine if you write
+localhost have yet to try running in 2 separate machine. I want to wait until I make sure error handaling is made correctly.

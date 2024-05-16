@@ -10,12 +10,12 @@
 #include <math.h>
 #include <signal.h>
 
-int getValidChoice(int client_socket);
+int getValidChoice(int client_socket, int server[2], int child[2]);
 void choiceMenu (int answer, int client_socket);
 void calculateFactorial(int client_socket, int server[2], int child[2]);
 bool containsOnlyNumbers(const char *str);
-void findTriangleArea(int client_socket);
-void typeOfTriangle(int client_socket, int sides[3]);
+void findTriangleArea(int client_socket, int server[2], int child[2]);
+void typeOfTriangle(int client_socket, int server[2], int child[2], int sides[3]);
 
 unsigned int factorial(int n) {
     if (n == 0 || n == 1) {
@@ -58,14 +58,14 @@ void handleClient(int client_socket, int server[2], int child[2]) {
     char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)Exit the program\nPlease input your choice: ";
 
     sendData(client_socket, testing);
-    int answer = getValidChoice(client_socket);
+    int answer = getValidChoice(client_socket, server, child);
     choiceMenu(answer, client_socket);
 
     if ( answer == 1){
       calculateFactorial(client_socket, server, child);
     }
     else if ( answer == 2) {
-      findTriangleArea(client_socket);
+      findTriangleArea(client_socket, server, child);
     }
     else if ( answer == 3){
       break;
@@ -75,12 +75,17 @@ void handleClient(int client_socket, int server[2], int child[2]) {
 }
 
 
-int main() {
-  int server_socket, client_socket;
+int main(int argc, char *argv[]) {
+  int server_socket, client_socket, portnumber;
   struct sockaddr_in server_address, client_address;
   socklen_t client_address_len = sizeof(client_address);
   int serverpipe[2];
   int childpipe[2];
+
+  if (argc < 2){
+     fprintf(stderr, "No port provided. Usage %s portnumber\n", argv[0]);
+     exit(1);
+  }
 
   if (pipe(serverpipe) == -1 || pipe(childpipe) == -1) {
      error("Error creating pipe");
@@ -92,10 +97,12 @@ int main() {
     error("Error opening socket");
   }
 
+  portnumber = atoi(argv[1]);
+
   // Specify address
   server_address.sin_family = AF_INET;
-  server_address.sin_addr.s_addr = INADDR_ANY;
-  server_address.sin_port = htons(9002);
+  server_address.sin_addr.s_addr = INADDR_ANY; 
+  server_address.sin_port = htons(portnumber);
 
   // Bind socket to address
   if (bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
@@ -104,7 +111,7 @@ int main() {
 
   // Listen for connections
   listen(server_socket, 5);
-  printf("Server listening on port 9002...\n");
+  printf("Server listening on port %d...\n", portnumber);
 
   while(1){
 
@@ -129,12 +136,22 @@ int main() {
        // Parent process
        signal(SIGINT, handle_sigint);
        int number;
+       int answer;
        close(childpipe[1]);
-       read(childpipe[0], &number, sizeof(number));
-       unsigned int answer = factorial(number);
-       close(serverpipe[0]);
-       write(serverpipe[1], &answer, sizeof(answer));
-       close(client_socket);
+       read(childpipe[0], &answer, sizeof(answer));
+       if(answer == 1){
+         close(childpipe[1]);
+         read(childpipe[0], &number, sizeof(number));
+         unsigned int answer = factorial(number);
+         close(serverpipe[0]);
+         write(serverpipe[1], &answer, sizeof(answer));
+         close(client_socket);
+       }else if(answer == 2){
+          int sides[3];
+          close(childpipe[1]);
+          read(childpipe[0], &sides, sizeof(sides));
+          typeOfTriangle( client_socket, serverpipe, childpipe, sides);
+        }
      }
   }
   // Close server socket
@@ -143,7 +160,7 @@ int main() {
   return 0;
 }
 
-int getValidChoice(int client_socket){
+int getValidChoice(int client_socket, int server[2], int child[2]){
   int answer;
   char client[10];
 
@@ -160,6 +177,9 @@ int getValidChoice(int client_socket){
   }
 
   printf("Client chose option: %d\n", answer);
+  
+  close(child[0]);
+  write(child[1], &answer, sizeof(answer));
 
   return answer;
 }
@@ -232,7 +252,7 @@ bool containsOnlyNumbers(const char *str) {
    return true;
 }
 
-void findTriangleArea(int client_socket) {
+void findTriangleArea(int client_socket, int server[2], int child[2]) {
   char choose1[50] = "Please input the first side length: ";
   char choose2[50] = "Please input the second side length: ";
   char choose3[50] = "Please input the third side length: ";
@@ -276,29 +296,45 @@ void findTriangleArea(int client_socket) {
     i++;
   }
 
+  close(child[0]);
+  write(child[1], &sides, sizeof(sides));
+
+
+  char areaStr[100];
+  close(server[1]);
+  read(server[0], &areaStr, sizeof(areaStr));
+  sendData(client_socket, areaStr);
+
+  char triangleType[100];
+  close(server[1]);
+  read(server[0], &triangleType, sizeof(triangleType));
+  sendData(client_socket, triangleType);
+}
+
+void typeOfTriangle(int client_socket, int server[2], int child[2], int sides[3]){
+  char equilateral[50] = "The triangle is an equilateral one\n";
+  char isosceles [50] = "The triangle is an isosceles one\n";
+  char scalene[50] = "The triangle is a scalene one\n";
+
   int a = sides[0], b = sides[1], c = sides[2];
   double s = (a + b + c) / 2.0;
   double area = sqrt(s * (s - a) * (s - b) * (s - c));
 
   char areaStr[100];
   sprintf(areaStr, "Area of the triangle: %.2f\n", area);
-  sendData(client_socket, areaStr);
-
-  typeOfTriangle(client_socket, sides);
-}
-
-void typeOfTriangle(int client_socket, int sides[3]){
-  char equilateral[50] = "The triangle is an equilateral one\n";
-  char isosceles [50] = "The triangle is an isosceles one\n";
-  char scalene[50] = "The triangle is a scalene one\n";
+  close(server[0]);
+  write(server[1], areaStr, sizeof(areaStr));
 
   if ( sides[0] == sides[1] && sides[1] == sides[2]){
-    sendData(client_socket, equilateral);
+    close(server[0]);
+    write(server[1], equilateral, sizeof(equilateral));
   }
   else if (sides[0] == sides[1] || sides[0] == sides[2] || sides[1] == sides[2]){
-    sendData(client_socket, isosceles);
+    close(server[0]);
+    write(server[1], isosceles, sizeof(isosceles));
   }
-  else{
-    sendData(client_socket, scalene);
+  else{ 
+    close(server[0]);
+    write(server[1], scalene, sizeof(scalene));
   }
 }
