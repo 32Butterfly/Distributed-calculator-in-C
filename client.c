@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <netdb.h>
+#include <signal.h>
+
+int network_socket;
 
 void calculateFactorialClient(int network_socket);
 void getFirstTriangleSide(int network_socket);
@@ -16,27 +19,37 @@ void error(const char *msg){
 }
 
 void sendData(int network_socket, const char *data) {
+  sleep(1);
   if (send(network_socket, data, strlen(data), 0) < 0) {
     error("Error sending data to the server"); 
   }
 }
 
 void readData(int network_socket, char *buffer, int buffer_size) {
+  sleep(1);
   if (recv(network_socket, buffer, buffer_size, 0) < 0) {
     error("Error receiving data from the server");
   }
 }
 
+void handle_sigint(int sig) {
+  printf("\nCaught signal %d, sending exit message to server and exiting...\n", sig);
+  sendData(network_socket, "Exiting the server");
+  close(network_socket);
+  exit(0);
+}
+
 int main(int argc, char *argv[]) {
-  //create socket
-  int network_socket, server_success, portnumber;
+  int server_success, portnumber;
+  signal(SIGINT, handle_sigint);
 
   if (argc < 3){
     fprintf(stderr, "Usage: %s hostname portnumber\n", argv[0]);
     exit(1);
   }
-
+ 
   char server [150];
+  //create socket
   network_socket = socket(AF_INET, SOCK_STREAM, 0);
 
   portnumber = atoi(argv[2]);
@@ -61,11 +74,9 @@ int main(int argc, char *argv[]) {
   }
 
   char server_response[200];
-
   readData (network_socket, server_response, sizeof(server_response));
 
   char response[5];
-  int factorial;
 
   while (1){
     printf("Server: %s", server_response);
@@ -89,7 +100,6 @@ int main(int argc, char *argv[]) {
       readData (network_socket, server, sizeof(server));
       printf("Server: %s", server);
       bzero(server, sizeof(server));
-
     }
     else if (strstr (server, "Exit") != NULL){
      exit(1);
@@ -146,6 +156,7 @@ void calculateFactorialClient(int network_socket) {
     bzero(&result, sizeof(result));
     bzero(question, sizeof(question));
     bzero(server_response, sizeof(server_response));
+    bzero(number_str, sizeof(number_str));
     break; // Exit the loop
   }
 }

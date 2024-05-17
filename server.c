@@ -35,12 +35,14 @@ void error (const char *msg){
 }
 
 void sendData(int network_socket, const char *data) {
+  sleep(1);
   if (send(network_socket, data, strlen(data), 0) < 0) {
     error("Error sending data to the client");
   }
 }
 
 void readData(int network_socket, char *buffer, int buffer_size) {
+  sleep(1);
   if (recv(network_socket, buffer, buffer_size, 0) < 0) {
     error("Error receiving data from the client");
   }
@@ -148,14 +150,18 @@ int main(int argc, char *argv[]) {
       close(serverpipe[0]); // Close the unused read end of the server pipe
 
       while (1) {
+        signal(SIGINT, handle_sigint);
+        sleep(1);
         read(childpipe[0], &answer, sizeof(answer));
 
         if (answer == 1) {
+            sleep(1);
             read(childpipe[0], &number, sizeof(number));
             unsigned int result = factorial(number);
             write(serverpipe[1], &result, sizeof(result));
         } else if (answer == 2) {
             int sides[3];
+            sleep(1);
             read(childpipe[0], &sides, sizeof(sides));
             typeOfTriangle(client_socket, serverpipe, childpipe, sides);
         }
@@ -241,6 +247,7 @@ void calculateFactorial(int client_socket, int server[2], int child[2]){
      close(child[0]);
      write(child[1], &number, sizeof(number));
      close(server[1]);
+     sleep(1);
      read(server[0], &answer, sizeof(answer));
      char str[100];
      sprintf(str, "%u", answer);
@@ -310,10 +317,12 @@ void findTriangleArea(int client_socket, int server[2], int child[2]) {
 
   char areaStr[50];
   close(server[1]);
+  sleep(1);
   read(server[0], &areaStr, sizeof(areaStr));
   sendData(client_socket, areaStr);
 
   char triangleType[50];
+  sleep(1);
   read(server[0], &triangleType, sizeof(triangleType));
   sendData(client_socket, triangleType);
   bzero(sides, sizeof(sides));
