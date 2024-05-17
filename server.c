@@ -138,29 +138,33 @@ int main(int argc, char *argv[]) {
        close(serverpipe[0]);
        exit(0); // Exit child process
      }
-     else {
-       // Parent process
-       signal(SIGINT, handle_sigint);
-       int number;
-       int answer;
-       close(childpipe[1]);
-       close(serverpipe[0]);
-       read(childpipe[0], &answer, sizeof(answer));
-       if(answer == 1){
-         read(childpipe[0], &number, sizeof(number));
-         unsigned int result;
-         result = factorial(number);
-         write(serverpipe[1], &result, sizeof(result));
-       }else if(answer == 2){
-          int sides[3];
-          read(childpipe[0], &sides, sizeof(sides));
-          typeOfTriangle( client_socket, serverpipe, childpipe, sides);
+
+    else {
+      // Parent process
+      signal(SIGINT, handle_sigint); // Ensure handle_sigint is defined
+      int number;
+      int answer;
+      close(childpipe[1]);  // Close the unused write end of the child pipe
+      close(serverpipe[0]); // Close the unused read end of the server pipe
+
+      while (1) {
+        read(childpipe[0], &answer, sizeof(answer));
+
+        if (answer == 1) {
+            read(childpipe[0], &number, sizeof(number));
+            unsigned int result = factorial(number);
+            write(serverpipe[1], &result, sizeof(result));
+        } else if (answer == 2) {
+            int sides[3];
+            read(childpipe[0], &sides, sizeof(sides));
+            typeOfTriangle(client_socket, serverpipe, childpipe, sides);
         }
-          close(client_socket);
-          close(childpipe[0]);
-          close(serverpipe[1]);
-          bzero(&number, sizeof(number));
-     }
+
+        bzero(&number, sizeof(number)); // Reset the number variable
+      }
+
+    close(client_socket); // Close the client socket after breaking out of the loop
+    }
   }
   // Close server socket
   close(server_socket);
@@ -174,14 +178,12 @@ int getValidChoice(int client_socket, int server[2], int child[2]){
 
   bzero(client, sizeof(client));
   bzero(&answer, sizeof(answer));
-  sleep(1);
   readData(client_socket, client, sizeof(client));
 
   answer = atoi(client);
 
   while (answer < 1 || answer > 3){
     sendData(client_socket, "Incorrect choice\n");
-    sleep(2);
     bzero(client, sizeof(client));
     readData(client_socket, client, sizeof(client));
     answer = atoi(client);
@@ -217,7 +219,6 @@ void calculateFactorial(int client_socket, int server[2], int child[2]){
   char error[100] = "Error input the number 1 or above\n";
   int number;
 
-  sleep(1);
   sendData(client_socket, question);
 
   while (1) {
@@ -225,7 +226,6 @@ void calculateFactorial(int client_socket, int server[2], int child[2]){
     printf("Client: wants the factorial of %s\n", client);
 
     if (!containsOnlyNumbers(client)) {
-      sleep(3);
       bzero(client, sizeof(client));
       sendData(client_socket, error);
       continue;
@@ -233,7 +233,6 @@ void calculateFactorial(int client_socket, int server[2], int child[2]){
 
     number = atoi(client);
     if (number < 0 || number > 12) {
-      sleep(3);
       bzero(client, sizeof(client));
       sendData(client_socket, error);
       continue;
@@ -243,15 +242,12 @@ void calculateFactorial(int client_socket, int server[2], int child[2]){
      write(child[1], &number, sizeof(number));
      close(server[1]);
      read(server[0], &answer, sizeof(answer));
-     printf("READ ANSWER %d", answer);
      char str[100];
      sprintf(str, "%u", answer);
      sendData(client_socket, str);
      break; // Exit the loop if valid input received
   }
   bzero(question, sizeof(question));
-    close(child[1]);
-    close(server[0]);
 }
 
 bool containsOnlyNumbers(const char *str) {
@@ -276,8 +272,8 @@ void findTriangleArea(int client_socket, int server[2], int child[2]) {
   int sides[3];
   int number;
   int i = 0;
-  sleep(3);
   sendData(client_socket, choose1);
+  bzero(client, sizeof(client)); 
 
   while (i < 3) {
     // Receive the request for the next side from the client
@@ -285,7 +281,6 @@ void findTriangleArea(int client_socket, int server[2], int child[2]) {
     printf("Client: Side %d: %s\n", i + 1, client);
 
     if (!containsOnlyNumbers(client)) {
-      sleep(3);
       sendData(client_socket, error);
       bzero(client, sizeof(client));
       continue;
@@ -293,7 +288,6 @@ void findTriangleArea(int client_socket, int server[2], int child[2]) {
 
     number = atoi(client);
     if (number <= 0 || number > 100) {
-       sleep(3);
        sendData(client_socket, error);
        bzero(client, sizeof(client));
        continue;
@@ -314,15 +308,15 @@ void findTriangleArea(int client_socket, int server[2], int child[2]) {
   close(child[0]);
   write(child[1], &sides, sizeof(sides));
 
-  char areaStr[100];
+  char areaStr[50];
   close(server[1]);
   read(server[0], &areaStr, sizeof(areaStr));
   sendData(client_socket, areaStr);
 
-  char triangleType[100];
-  close(server[1]);
+  char triangleType[50];
   read(server[0], &triangleType, sizeof(triangleType));
   sendData(client_socket, triangleType);
+  bzero(sides, sizeof(sides));
 }
 
 void typeOfTriangle(int client_socket, int server[2], int child[2], int sides[3]){
@@ -334,7 +328,7 @@ void typeOfTriangle(int client_socket, int server[2], int child[2], int sides[3]
   double s = (a + b + c) / 2.0;
   double area = sqrt(s * (s - a) * (s - b) * (s - c));
 
-  char areaStr[100];
+  char areaStr[50];
   sprintf(areaStr, "Area of the triangle: %.2f\n", area);
   close(server[0]);
   write(server[1], areaStr, sizeof(areaStr));

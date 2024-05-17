@@ -70,9 +70,8 @@ int main(int argc, char *argv[]) {
   while (1){
     printf("Server: %s", server_response);
     scanf("%s", &response);
-    send(network_socket, response, sizeof(response), 0);
+    sendData(network_socket, response);
 
-    sleep(1);
     readData (network_socket, server, sizeof(server));
     printf("Server: %s\n", server);
 
@@ -81,11 +80,16 @@ int main(int argc, char *argv[]) {
      bzero(server, sizeof(server));
      bzero(response, sizeof(response));
     }
-    else if (strstr (server, "triangle") != NULL) {  
+    else if (strstr (server, "triangle") != NULL) { 
+      bzero(server, sizeof(server));
       getFirstTriangleSide(network_socket);
       readData (network_socket, server, sizeof(server));
-      printf("\nServer: %s\n", server);
-      bzero(server, sizeof(server)); 
+      printf("\nServer: %s", server);
+      bzero(server, sizeof(server));
+      readData (network_socket, server, sizeof(server));
+      printf("Server: %s", server);
+      bzero(server, sizeof(server));
+
     }
     else if (strstr (server, "Exit") != NULL){
      exit(1);
