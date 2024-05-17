@@ -63,3 +63,7 @@ for specifying in the command line what the ip and port is so we can have not ju
 
 I managed to make the piping work for AreaCalculation as well. As well as making that the script takes in the portnumber and the host for client. It works on the 1 machine if you write
 localhost have yet to try running in 2 separate machine. I want to wait until I make sure error handaling is made correctly.
+
+### 2024/06/17
+I started trying to make it so the client works in a loop as well as the server but there seems to be a problem with the pipes or more correctly with pipes that calculate factorial result
+since from the second loop it says no matter what the input is that the answer is 1? Will try to fix today if I can

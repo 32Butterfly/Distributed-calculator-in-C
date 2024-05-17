@@ -60,44 +60,39 @@ int main(int argc, char *argv[]) {
     error("Error connecting to the server\n");
   }
 
-  char server_response[150];
+  char server_response[200];
 
   readData (network_socket, server_response, sizeof(server_response));
-  printf("Server: %s", server_response);
 
-  char response;
+  char response[5];
   int factorial;
 
   while (1){
-
-    bzero(server, sizeof(server));
-    scanf("%c", &response);
-    send (network_socket, &response, sizeof(response), 0);
+    printf("Server: %s", server_response);
+    scanf("%s", &response);
+    send(network_socket, response, sizeof(response), 0);
 
     sleep(1);
     readData (network_socket, server, sizeof(server));
     printf("Server: %s\n", server);
 
     if (strstr(server, "factorial") != NULL) {
-
      calculateFactorialClient(network_socket);
-     break;
+     bzero(server, sizeof(server));
+     bzero(response, sizeof(response));
     }
-    else if (strstr (server, "triangle") != NULL) {
-       for(int i = 0; i < 3; ++i){
-          getFirstTriangleSide(network_socket);
-        }
-
-      sleep(1);
+    else if (strstr (server, "triangle") != NULL) {  
+      getFirstTriangleSide(network_socket);
       readData (network_socket, server, sizeof(server));
       printf("\nServer: %s\n", server);
-      break;
+      bzero(server, sizeof(server)); 
     }
     else if (strstr (server, "Exit") != NULL){
-     break;
+     exit(1);
     }
     else{
       printf("Server: please input your choice: ");
+      bzero(server, sizeof(server));
       continue;
     }
   }
@@ -143,23 +138,43 @@ void calculateFactorialClient(int network_socket) {
     unsigned int result = atoi(server_response);
 
     printf("Server: Factorial of %d is %d\n", number, result);
+    bzero(&number, sizeof(number));
+    bzero(&result, sizeof(result));
+    bzero(question, sizeof(question));
+    bzero(server_response, sizeof(server_response));
     break; // Exit the loop
   }
 }
 
 void getFirstTriangleSide(int network_socket){
   char question[100];
+  int i = 0;
 
   // Receive the prompt from the server
-  bzero(question, sizeof(question));
   readData (network_socket, question, sizeof(question));
-  printf("Server: %s", question);
-
-  // Read the side length from the user
   int number;
+
+  while(i < 3){
+  // Read the side length from the user
+  printf("Server: %s", question);
   scanf("%d", &number);
 
   char numberStr[100];
   sprintf(numberStr, "%d", number);
   sendData(network_socket, numberStr);
+  bzero(question, sizeof(question));
+  if ( i == 2) break;
+  readData(network_socket, question, sizeof(question));
+  while (strstr (question, "Error") != NULL){
+     printf("Server: %s", question);
+     scanf("%d", &number);
+
+     sprintf(numberStr, "%d", number);
+     sendData(network_socket, numberStr);
+     bzero(question, sizeof(question));
+     readData(network_socket, question, sizeof(question));
+    }
+   i++;
+  }
+  bzero(question, sizeof(question));
 }
