@@ -18,15 +18,17 @@ void findTriangleArea(int client_socket, int server[2], int child[2]);
 void typeOfTriangle(int client_socket, int server[2], int child[2], int sides[3]);
 
 unsigned int factorial(int n) {
-    unsigned int answer = 1;
-    if (n == 0 || n == 1){
+  unsigned int answer = 1;
+  if (n == 0 || n == 1){
       return 1;
-    } else {
+  }
+   else {
       for(int i = 1; i <= n; ++i){
-       answer *= i;
-     }
-     return answer;
+        answer *= i;
    }
+
+   return answer;
+  }
 }
 
 void error (const char *msg){
@@ -59,12 +61,11 @@ void handle_sigint(int sig) {
 }
 
 void handleClient(int client_socket, int server[2], int child[2]) {
- 
-  char testing [150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)Exit the program\nPlease input your choice: ";
-   
+  char testing[150] = "Please choose what kind of calculation you want to perform\n1)Factorial\n2)Triangle area\n3)Exit the program\nPlease input your choice: ";
   sendData(client_socket, testing);
-
+ 
   while(1){ 
+
     int answer = getValidChoice(client_socket, server, child);
     choiceMenu(answer, client_socket);
 
@@ -85,16 +86,10 @@ int main(int argc, char *argv[]) {
   int server_socket, client_socket, portnumber;
   struct sockaddr_in server_address, client_address;
   socklen_t client_address_len = sizeof(client_address);
-  int serverpipe[2];
-  int childpipe[2];
 
   if (argc < 2){
      fprintf(stderr, "No port provided. Usage %s portnumber\n", argv[0]);
      exit(1);
-  }
-
-  if (pipe(serverpipe) == -1 || pipe(childpipe) == -1) {
-     error("Error creating pipe");
   }
 
   // Create socket
@@ -127,52 +122,70 @@ int main(int argc, char *argv[]) {
        error("Error accepting connection");
     }
 
+    int serverpipe[2];
+    int childpipe[2];
+
+    if (pipe(serverpipe) == -1 || pipe(childpipe) == -1) {
+       error("Error creating pipe");
+    }
+
      // Create a child process to handle the client
      pid_t pid = fork();
      if (pid < 0) {
        error("Error forking process");
-     } else if (pid == 0) {
+     } 
+     else if (pid == 0) {
        // Child process
        signal(SIGINT, SIG_DFL);
        close(server_socket); // Close server socket in child process
        handleClient(client_socket, serverpipe, childpipe);
        close(childpipe[1]);
        close(serverpipe[0]);
-       exit(0); // Exit child process
+       exit(0); 
      }
-
     else {
       // Parent process
-      signal(SIGINT, handle_sigint); // Ensure handle_sigint is defined
-      int number;
-      int answer;
-      close(childpipe[1]);  // Close the unused write end of the child pipe
-      close(serverpipe[0]); // Close the unused read end of the server pipe
+      signal(SIGINT, handle_sigint); 
+      close(childpipe[1]);  
+      close(serverpipe[0]); 
 
+    // Fork the parent process again to handle the infinite loop of calculations
+    pid_t pid2 = fork();
+
+    if (pid2 == -1) {
+        error("Error forking process");
+    }
+    else if (pid2 == 0) {
+      // Inside the child process make it so the client can do unlimited amount of calculations
       while (1) {
-        signal(SIGINT, handle_sigint);
-        sleep(1);
+        int answer;
         read(childpipe[0], &answer, sizeof(answer));
 
         if (answer == 1) {
-            sleep(1);
-            read(childpipe[0], &number, sizeof(number));
-            unsigned int result = factorial(number);
-            write(serverpipe[1], &result, sizeof(result));
-        } else if (answer == 2) {
-            int sides[3];
-            sleep(1);
-            read(childpipe[0], &sides, sizeof(sides));
-            typeOfTriangle(client_socket, serverpipe, childpipe, sides);
+           int number;
+           read(childpipe[0], &number, sizeof(number));
+           unsigned int result = factorial(number);
+           write(serverpipe[1], &result, sizeof(result));
+        } 
+        else if (answer == 2) {
+           int sides[3];
+           read(childpipe[0], &sides, sizeof(sides));
+           typeOfTriangle(client_socket, serverpipe, childpipe, sides);
         }
-
-        bzero(&number, sizeof(number)); // Reset the number variable
+        else {
+          break;
+        }
       }
 
-    close(client_socket); // Close the client socket after breaking out of the loop
-    }
+    close(client_socket);
+    close(childpipe[0]);
+    close(serverpipe[1]);
+    exit(EXIT_SUCCESS);
   }
-  // Close server socket
+    // Close client socket after breaking out of the loop
+    close(client_socket);
+  }
+}
   close(server_socket);
 
   return 0;

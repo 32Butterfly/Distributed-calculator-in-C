@@ -33,8 +33,7 @@ void readData(int network_socket, char *buffer, int buffer_size) {
 }
 
 void handle_sigint(int sig) {
-  printf("\nCaught signal %d, sending exit message to server and exiting...\n", sig);
-  sendData(network_socket, "Exiting the server");
+  printf("\nCaught signal. Closing the client and child server\n");
   close(network_socket);
   exit(0);
 }
