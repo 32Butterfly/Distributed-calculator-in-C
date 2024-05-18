@@ -55,7 +55,8 @@ void handle_sigint(int sig) {
   count++;
   printf("\nTried to exit %d time(s).\n", count);
   if (count >= 3) {
-    printf("Exiting server...\n"); 
+    printf("Exiting server...\n");
+    kill(0, SIGKILL); //kill every child of the parent process.
     exit(EXIT_SUCCESS);
   }
 }
@@ -157,6 +158,7 @@ int main(int argc, char *argv[]) {
     }
     else if (pid2 == 0) {
       // Inside the child process make it so the client can do unlimited amount of calculations
+      signal(SIGINT, SIG_DFL);
       while (1) {
         int answer;
         read(childpipe[0], &answer, sizeof(answer));
@@ -296,7 +298,6 @@ void findTriangleArea(int client_socket, int server[2], int child[2]) {
   bzero(client, sizeof(client)); 
 
   while (i < 3) {
-    // Receive the request for the next side from the client
     readData(client_socket, client, sizeof(client));
     printf("Client: Side %d: %s\n", i + 1, client);
 

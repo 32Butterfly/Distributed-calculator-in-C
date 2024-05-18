@@ -13,10 +13,17 @@ Evaldas Dmitrišin IT 1st year 3rd group student
 
 ## **How the code works**
 This code uses simple socket communication. It communicates via strings and numbers. First the client is given a choice menu. The client has to input the corresponding number. Which is then
-validated by the child server process. If the input was correct aka 1-3 then child server sends the client back a Success you chose "option" string. By this option we determine what will be done.
+validated by the forked child1 server process. If the input was correct aka 1-3 then child1 server sends the client back a Success you chose "option" string. By this option we determine what will be done.
 The code distinguishes what needs to be done by using strstr which checks if the response contains the "option" in the response string. Then we proceed with the option and ask for client
-input. The input is once again validated by the child server. And if the input is correct we pipe the number which has to be calculated to the main server where the calculation will be
-done. We then pipe back the result to the child process which sends the response to the client with the result.
+input. The input is once again validated by the child1 server. And if the input is correct we fork the parent process again so that we have a child2 responsible for piping between the child1
+which is responsible for communicating with the client and it child2. While the main parent is responsible for listening for new connections. 
+
+The basic concept of how the piping works is that the child1 responsible for communicating sends the client inputted numbers which need to be calculated after verifying that they are correct. 
+Child2 recieves the number from a pipe and calculates the result which then is piped through a second pipe back to the child1.
+
+The code uses signals as well although primative the client side of things ctrl+c immediately shuts down the client and the child it was communicating with. 
+The server signal is slightly more complicated as it takes 3 ctrl+C to shut down and after the third ctrl+c it kills all the parents children before exiting thus hopefully avoiding leaving
+deamons roaming in the system. 1 major oversight is that shutting down the main server **DOES NOT** kill the clients so they are left not responding.
 
 ### Below I will document my successes/failures and general updates about the code.
 
@@ -70,3 +77,9 @@ since from the second loop it says no matter what the input is that the answer i
 
 The loop works now but there is a problem with singnaling now and the loop stops at 6 factorial or 3 triangle. I assume it's because of pipes somehow being overflown because the timing is
 consisten when the loop stops working
+
+### 2024/06/18
+
+Made it so the code handles infinite loop with the multiple clients. Took over 3 hours. Added a little bit more secure exiting as now all the server children are killed after the third
+ctrl+C. Added so that the user actually exits if the client inputs number 3 in the choice menu. **Know bug** if you choose option 2 in the very first cycle of the loop TH appears for no
+reason? It is gone afterward just in the very first option.
