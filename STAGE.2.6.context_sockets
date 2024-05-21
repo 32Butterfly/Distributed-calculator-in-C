@@ -1,0 +1,8 @@
+usage of Sockets context
+STAGE.2.1.mains_client_c:    socket()
+STAGE.2.1.mains_server_c:    socket()
+STAGE.2.1.mains_server_c:    accept()
+STAGE.2.1.mains_server_c:    listen()
+STAGE.2.1.mains_client_c:    connect()
+STAGE.2.1.mains_server_c:    bind()
+STAGE.2.1.mains_server_c:    accept()

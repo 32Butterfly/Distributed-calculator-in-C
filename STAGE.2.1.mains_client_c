@@ -1,0 +1,74 @@
+main() <int main (int argc, char *argv[]) at client.c:41>:
+    signal()
+    handle_sigint() <void handle_sigint (int sig) at client.c:35>:
+        printf()
+        close()
+        exit()
+    fprintf()
+    exit()
+    socket()
+    atoi()
+    gethostbyname()
+    bzero()
+    htons()
+    bcopy()
+    connect()
+    error() <void error (const char *msg) at client.c:16>:
+        perror()
+        exit()
+    readData() <void readData (int network_socket, char *buffer, int buffer_size) at client.c:28>:
+        sleep()
+        recv()
+        error() <void error (const char *msg) at client.c:16>:
+            perror()
+            exit()
+    printf()
+    scanf()
+    sendData() <void sendData (int network_socket, const char *data) at client.c:21>:
+        sleep()
+        send()
+        strlen()
+        error() <void error (const char *msg) at client.c:16>:
+            perror()
+            exit()
+    strstr()
+    calculateFactorialClient() <void calculateFactorialClient (int network_socket) at client.c:118>:
+        readData() <void readData (int network_socket, char *buffer, int buffer_size) at client.c:28>:
+            sleep()
+            recv()
+            error() <void error (const char *msg) at client.c:16>:
+                perror()
+                exit()
+        printf()
+        scanf()
+        sprintf()
+        sendData() <void sendData (int network_socket, const char *data) at client.c:21>:
+            sleep()
+            send()
+            strlen()
+            error() <void error (const char *msg) at client.c:16>:
+                perror()
+                exit()
+        strstr()
+        bzero()
+        atoi()
+    getFirstTriangleSide() <void getFirstTriangleSide (int network_socket) at client.c:163>:
+        readData() <void readData (int network_socket, char *buffer, int buffer_size) at client.c:28>:
+            sleep()
+            recv()
+            error() <void error (const char *msg) at client.c:16>:
+                perror()
+                exit()
+        printf()
+        scanf()
+        sprintf()
+        sendData() <void sendData (int network_socket, const char *data) at client.c:21>:
+            sleep()
+            send()
+            strlen()
+            error() <void error (const char *msg) at client.c:16>:
+                perror()
+                exit()
+        bzero()
+        strstr()
+    close()

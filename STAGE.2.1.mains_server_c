@@ -1,0 +1,111 @@
+main() <int main (int argc, char *argv[]) at server.c:86>:
+    fprintf()
+    exit()
+    socket()
+    error() <void error (const char *msg) at server.c:34>:
+        perror()
+        exit()
+    atoi()
+    htons()
+    bind()
+    listen()
+    printf()
+    accept()
+    pipe()
+    fork()
+    signal()
+    close()
+    handleClient() <void handleClient (int client_socket, int server[2], int child[2]) at server.c:64>:
+        sendData() <void sendData (int network_socket, const char *data) at server.c:39>:
+            sleep()
+            send()
+            strlen()
+            error() <void error (const char *msg) at server.c:34>:
+                perror()
+                exit()
+        getValidChoice() <int getValidChoice (int client_socket, int server[2], int child[2]) at server.c:196>:
+            bzero()
+            readData() <void readData (int network_socket, char *buffer, int buffer_size) at server.c:46>:
+                sleep()
+                recv()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+            atoi()
+            sendData() <void sendData (int network_socket, const char *data) at server.c:39>:
+                sleep()
+                send()
+                strlen()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+            printf()
+            close()
+            write()
+        choiceMenu() <void choiceMenu (int answer, int client_socket) at server.c:221>:
+            sendData() <void sendData (int network_socket, const char *data) at server.c:39>:
+                sleep()
+                send()
+                strlen()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+        calculateFactorial() <void calculateFactorial (int client_socket, int server[2], int child[2]) at server.c:236>:
+            sendData() <void sendData (int network_socket, const char *data) at server.c:39>:
+                sleep()
+                send()
+                strlen()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+            readData() <void readData (int network_socket, char *buffer, int buffer_size) at server.c:46>:
+                sleep()
+                recv()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+            printf()
+            containsOnlyNumbers() <bool containsOnlyNumbers (const char *str) at server.c:275>:
+                strlen()
+            bzero()
+            atoi()
+            close()
+            write()
+            sleep()
+            read()
+            sprintf()
+        findTriangleArea() <void findTriangleArea (int client_socket, int server[2], int child[2]) at server.c:288>:
+            sendData() <void sendData (int network_socket, const char *data) at server.c:39>:
+                sleep()
+                send()
+                strlen()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+            bzero()
+            readData() <void readData (int network_socket, char *buffer, int buffer_size) at server.c:46>:
+                sleep()
+                recv()
+                error() <void error (const char *msg) at server.c:34>:
+                    perror()
+                    exit()
+            printf()
+            containsOnlyNumbers() <bool containsOnlyNumbers (const char *str) at server.c:275>:
+                strlen()
+            atoi()
+            close()
+            write()
+            sleep()
+            read()
+    handle_sigint() <void handle_sigint (int sig) at server.c:53>:
+        printf()
+        kill()
+        exit()
+    read()
+    factorial() <unsigned int factorial (int n) at server.c:20>:
+    write()
+    typeOfTriangle() <void typeOfTriangle (int client_socket, int server[2], int child[2], int sides[3]) at server.c:345>:
+        sqrt()
+        sprintf()
+        close()
+        write()

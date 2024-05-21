@@ -1,0 +1,29 @@
+Detail history of commits for user evdm0167:
+* e3c016f (HEAD -> main, origin/main, origin/HEAD) (2024-05-18 21:23:08 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Little changes
+* c4ebb39 (2024-05-18 20:17:57 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> The loop works for multiple clients!!!!!!
+* 385e746 (2024-05-17 23:16:34 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Added 1 second delay so no errors occour
+* 391984d (2024-05-17 21:55:16 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Loop works somewhat
+* b6aabce (2024-05-17 20:20:20 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Starting loop
+* 206fb18 (2024-05-16 19:28:48 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Pipes portnumber and host
+* e361186 (2024-05-16 16:41:05 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> First pipe added
+* 347edab (2024-05-14 23:24:18 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Simple signaling/ bug fixes
+* 6598f88 (2024-05-14 23:23:48 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Simple signaling/ bug fixes
+* ffda80c (2024-05-13 16:49:35 +0000) Dmitrišin Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Delete .client.c.swp
+* 1f11866 (2024-05-13 19:16:26 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Forking with bad error handaling currently
+* fc7d654 (2024-05-13 15:33:21 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Refactoring/additional functionality
+* 34bf509 (2024-05-13 11:23:43 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Error handaling with functions
+* ce60585 (2024-05-08 13:27:50 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Refactoring code making error handaling
+* ab2ff23 (2024-05-08 12:26:55 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> markdown improvement
+* a42d62a (2024-05-08 12:25:10 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Testing markdown
+* 33d3d3a (2024-05-07 22:43:41 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Triangle area works but no error handaling
+* cae2067 (2024-05-06 22:44:11 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Starting the triangle area calculation
+* 5694581 (2024-05-06 22:43:30 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Starting the triangle area calculation
+* 8b98912 (2024-05-06 20:41:17 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Added a makefile!!!
+* 1c0f754 (2024-05-06 17:59:11 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Error handaling for factorial
+* 3fa9db9 (2024-05-05 12:43:22 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Factorial calculation without errorhandaling
+* 3a0e5d6 (2024-05-04 20:03:40 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Fixed the functionality
+* 724f2dd (2024-05-04 18:20:55 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Slight functionality will fix the bugs later today
+* 9eb87d5 (2024-05-04 14:04:09 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Playing around and testing
+* aed4f0c (2024-05-04 13:10:32 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Extremely basic server/client functionality
+* 6236cc5 (2024-05-03 19:54:27 +0300) Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Creating nesecarry files
+* 07a3664 (2024-04-17 09:22:36 +0000) Dmitrišin Evaldas <evaldas.dmitrisin@mif.stud.vu.lt> Initial commit
