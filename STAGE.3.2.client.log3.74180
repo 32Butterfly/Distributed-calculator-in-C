@@ -1,0 +1,59 @@
+10:04:26.057662 execve("/opt/gitREPO.T3/evdm0167/task3/client", ["/opt/gitREPO.T3/evdm0167/task3/c"..., "127.0.0.1", "8094"], 0x7ffe6ff14148 /* 19 vars */) = 0
+10:04:26.058212 brk(NULL)               = 0x564f145c8000
+10:04:26.058363 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f6e737ad000
+10:04:26.058493 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+10:04:26.058636 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+10:04:26.058736 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=26102, ...}, AT_EMPTY_PATH) = 0
+10:04:26.058840 mmap(NULL, 26102, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f6e737a6000
+10:04:26.058920 close(3)                = 0
+10:04:26.058991 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+10:04:26.059076 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20t\2\0\0\0\0\0"..., 832) = 832
+10:04:26.059151 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+10:04:26.059223 newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=1922136, ...}, AT_EMPTY_PATH) = 0
+10:04:26.059310 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+10:04:26.059383 mmap(NULL, 1970000, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f6e735c5000
+10:04:26.059458 mmap(0x7f6e735eb000, 1396736, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x26000) = 0x7f6e735eb000
+10:04:26.059896 mmap(0x7f6e73740000, 339968, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17b000) = 0x7f6e73740000
+10:04:26.059991 mmap(0x7f6e73793000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1ce000) = 0x7f6e73793000
+10:04:26.060092 mmap(0x7f6e73799000, 53072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f6e73799000
+10:04:26.060202 close(3)                = 0
+10:04:26.060281 mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f6e735c2000
+10:04:26.060374 arch_prctl(ARCH_SET_FS, 0x7f6e735c2740) = 0
+10:04:26.060437 set_tid_address(0x7f6e735c2a10) = 74180
+10:04:26.060496 set_robust_list(0x7f6e735c2a20, 24) = 0
+10:04:26.060554 rseq(0x7f6e735c3060, 0x20, 0, 0x53053053) = 0
+10:04:26.060689 mprotect(0x7f6e73793000, 16384, PROT_READ) = 0
+10:04:26.063618 mprotect(0x564f13149000, 4096, PROT_READ) = 0
+10:04:26.063713 mprotect(0x7f6e737df000, 8192, PROT_READ) = 0
+10:04:26.063820 prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+10:04:26.063931 munmap(0x7f6e737a6000, 26102) = 0
+10:04:26.064045 rt_sigaction(SIGINT, {sa_handler=0x564f13147339, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6e73601050}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+10:04:26.064150 socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 3
+10:04:26.064249 getrandom("\x4f\x73\xfa\x4b\xcd\x34\x0c\x82", 8, GRND_NONBLOCK) = 8
+10:04:26.064327 brk(NULL)               = 0x564f145c8000
+10:04:26.064389 brk(0x564f145e9000)     = 0x564f145e9000
+10:04:26.064477 newfstatat(AT_FDCWD, "/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=20, ...}, 0) = 0
+10:04:26.064599 openat(AT_FDCWD, "/etc/host.conf", O_RDONLY|O_CLOEXEC) = 4
+10:04:26.064690 newfstatat(4, "", {st_mode=S_IFREG|0644, st_size=9, ...}, AT_EMPTY_PATH) = 0
+10:04:26.064787 read(4, "multi on\n", 4096) = 9
+10:04:26.064871 read(4, "", 4096)       = 0
+10:04:26.065031 close(4)                = 0
+10:04:26.065104 futex(0x7f6e737a042c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+10:04:26.065537 openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
+10:04:26.065644 newfstatat(4, "", {st_mode=S_IFREG|0644, st_size=20, ...}, AT_EMPTY_PATH) = 0
+10:04:26.065736 read(4, "nameserver 10.0.0.1\n", 4096) = 20
+10:04:26.065815 read(4, "", 4096)       = 0
+10:04:26.065886 uname({sysname="Linux", nodename="debian", ...}) = 0
+10:04:26.065958 newfstatat(4, "", {st_mode=S_IFREG|0644, st_size=20, ...}, AT_EMPTY_PATH) = 0
+10:04:26.066046 close(4)                = 0
+10:04:26.066117 newfstatat(AT_FDCWD, "/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=20, ...}, 0) = 0
+10:04:26.066212 connect(3, {sa_family=AF_INET, sin_port=htons(8094), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+10:04:26.067455 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffd010b65b0) = 0
+10:04:27.067798 recvfrom(3, "Please choose what kind of calcu"..., 200, 0, NULL, NULL) = 132
+10:04:27.072923 newfstatat(1, "", {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x9), ...}, AT_EMPTY_PATH) = 0
+10:04:27.073090 write(1, "Server: Please choose what kind "..., 114) = 114
+10:04:27.073347 newfstatat(0, "", {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x9), ...}, AT_EMPTY_PATH) = 0
+10:04:27.073496 write(1, "Please input your choice: ", 26) = 26
+10:04:27.073676 read(0, 0x564f145c8de0, 1024) = -1 EIO (Input/output error)
+10:10:31.021982 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.022440 +++ killed by SIGHUP +++

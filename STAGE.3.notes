@@ -1,0 +1,7 @@
+Compiled with make
+No shared memory
+No semaphores
+Elaborate documentation
+No description in documentation how to start everything
+
+Observing anomalies when two clients work in parallel. See logs, if one client requests triangle calculations - other factorial, then factorial gets error. Suspected protocol issue.

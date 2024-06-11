@@ -1,0 +1,84 @@
+10:04:26.035695 set_robust_list(0x7f6c10c03a20, 24) = 0
+10:04:26.035865 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.035976 close(3)                = 0
+10:04:26.036086 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea7370120) = 0
+10:04:27.036365 sendto(4, "Please choose what kind of calcu"..., 132, 0, NULL, 0) = 132
+10:04:27.037391 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:04:28.037727 recvfrom(4, "2", 10, 0, NULL, NULL) = 1
+10:04:48.815361 write(1, "Client chose option: 2\n", 23) = 23
+10:04:48.815623 close(9)                = 0
+10:04:48.815834 write(10, "\2\0\0\0", 4) = 4
+10:04:48.816094 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea7370100) = 0
+10:04:49.816365 sendto(4, "Success you chose triangle area\n", 32, 0, NULL, 0) = 32
+10:04:49.817119 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:04:50.817513 sendto(4, "Please input the first side leng"..., 36, 0, NULL, 0) = 36
+10:04:50.817888 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:04:51.818251 recvfrom(4, "10", 100, 0, NULL, NULL) = 2
+10:04:56.100591 write(1, "Client: Side 1: 10\n", 19) = 19
+10:04:56.100780 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:04:57.101127 sendto(4, "Please input the second side len"..., 37, 0, NULL, 0) = 37
+10:04:57.101459 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:04:58.101826 recvfrom(4, "20", 100, 0, NULL, NULL) = 2
+10:05:00.845229 write(1, "Client: Side 2: 20\n", 19) = 19
+10:05:00.845407 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:05:01.845835 sendto(4, "Please input the third side leng"..., 36, 0, NULL, 0) = 36
+10:05:01.846205 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:05:02.846568 recvfrom(4, "15", 100, 0, NULL, NULL) = 2
+10:05:05.668545 write(1, "Client: Side 3: 15\n", 19) = 19
+10:05:05.668710 close(9)                = -1 EBADF (Bad file descriptor)
+10:05:05.668838 write(10, "\n\0\0\0\24\0\0\0\17\0\0\0", 12) = 12
+10:05:05.669549 close(8)                = 0
+10:05:05.669780 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fef0) = 0
+10:05:06.670639 read(5, "Area of the triangle: 72.62\n\0\0\0\0"..., 50) = 50
+10:05:06.670865 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:05:07.671214 sendto(4, "Area of the triangle: 72.62\n", 28, 0, NULL, 0) = 28
+10:05:07.672427 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fef0) = 0
+10:05:08.672803 read(5, "The triangle is a scalene one\n\0\0"..., 50) = 50
+10:05:08.672942 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:05:09.673282 sendto(4, "The triangle is a scalene one\n", 30, 0, NULL, 0) = 30
+10:05:09.675095 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:05:10.675452 recvfrom(4, "2", 10, 0, NULL, NULL) = 1
+10:06:05.626860 write(1, "Client chose option: 2\n", 23) = 23
+10:06:05.627031 close(9)                = -1 EBADF (Bad file descriptor)
+10:06:05.627203 write(10, "\2\0\0\0", 4) = 4
+10:06:05.627652 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea7370100) = 0
+10:06:06.627952 sendto(4, "Success you chose triangle area\n", 32, 0, NULL, 0) = 32
+10:06:06.628393 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:07.628749 sendto(4, "Please input the first side leng"..., 36, 0, NULL, 0) = 36
+10:06:07.629000 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:08.629356 recvfrom(4, "-10", 100, 0, NULL, NULL) = 3
+10:06:12.410004 write(1, "Client: Side 1: -10\n", 20) = 20
+10:06:12.410167 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:13.410527 sendto(4, "Error input a number 1 or above:"..., 33, 0, NULL, 0) = 33
+10:06:13.410870 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:14.411269 recvfrom(4, "10", 100, 0, NULL, NULL) = 2
+10:06:19.663167 write(1, "Client: Side 1: 10\n", 19) = 19
+10:06:19.663438 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:20.664003 sendto(4, "Please input the second side len"..., 37, 0, NULL, 0) = 37
+10:06:20.664718 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:21.665062 recvfrom(4, "15", 100, 0, NULL, NULL) = 2
+10:06:22.800573 write(1, "Client: Side 2: 15\n", 19) = 19
+10:06:22.800853 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:23.801464 sendto(4, "Please input the third side leng"..., 36, 0, NULL, 0) = 36
+10:06:23.802898 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:24.803435 recvfrom(4, "0", 100, 0, NULL, NULL) = 1
+10:06:29.941667 write(1, "Client: Side 3: 05\n", 19) = 19
+10:06:29.941936 close(9)                = -1 EBADF (Bad file descriptor)
+10:06:29.942158 write(10, "\n\0\0\0\17\0\0\0\5\0\0\0", 12) = 12
+10:06:29.942434 close(8)                = -1 EBADF (Bad file descriptor)
+10:06:29.942658 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fef0) = 0
+10:06:30.942936 read(5, "Area of the triangle: 0.00\n\0\0\0\0\0"..., 50) = 50
+10:06:30.943085 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:31.943467 sendto(4, "Area of the triangle: 0.00\n", 27, 0, NULL, 0) = 27
+10:06:31.944887 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fef0) = 0
+10:06:32.945307 read(5, "The triangle is a scalene one\n\0\0"..., 50) = 50
+10:06:32.945452 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736fed0) = 0
+10:06:33.945902 sendto(4, "The triangle is a scalene one\n", 30, 0, NULL, 0) = 30
+10:06:33.947850 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:06:34.948372 recvfrom(4, ".1", 10, 0, NULL, NULL) = 2
+10:06:34.948686 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:06:35.948999 sendto(4, "Incorrect choice\n", 17, 0, NULL, 0) = 17
+10:06:35.949417 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:06:36.949761 recvfrom(4, 0x7ffea7370162, 10, 0, NULL, NULL) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+10:10:31.030136 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.033103 +++ killed by SIGHUP +++

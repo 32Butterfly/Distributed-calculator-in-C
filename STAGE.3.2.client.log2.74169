@@ -1,0 +1,141 @@
+10:04:26.013216 execve("/opt/gitREPO.T3/evdm0167/task3/client", ["/opt/gitREPO.T3/evdm0167/task3/c"..., "127.0.0.1", "8094"], 0x7fff496c4a38 /* 19 vars */) = 0
+10:04:26.014124 brk(NULL)               = 0x55cc20d68000
+10:04:26.014364 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f300adaf000
+10:04:26.014556 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+10:04:26.015873 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+10:04:26.019619 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=26102, ...}, AT_EMPTY_PATH) = 0
+10:04:26.019730 mmap(NULL, 26102, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f300ada8000
+10:04:26.019811 close(3)                = 0
+10:04:26.019881 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+10:04:26.019970 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20t\2\0\0\0\0\0"..., 832) = 832
+10:04:26.020045 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+10:04:26.020118 newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=1922136, ...}, AT_EMPTY_PATH) = 0
+10:04:26.021073 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+10:04:26.023573 mmap(NULL, 1970000, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f300abc7000
+10:04:26.023669 mmap(0x7f300abed000, 1396736, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x26000) = 0x7f300abed000
+10:04:26.023766 mmap(0x7f300ad42000, 339968, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17b000) = 0x7f300ad42000
+10:04:26.023852 mmap(0x7f300ad95000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1ce000) = 0x7f300ad95000
+10:04:26.023956 mmap(0x7f300ad9b000, 53072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f300ad9b000
+10:04:26.024063 close(3)                = 0
+10:04:26.024143 mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f300abc4000
+10:04:26.024243 arch_prctl(ARCH_SET_FS, 0x7f300abc4740) = 0
+10:04:26.024308 set_tid_address(0x7f300abc4a10) = 74169
+10:04:26.024368 set_robust_list(0x7f300abc4a20, 24) = 0
+10:04:26.024427 rseq(0x7f300abc5060, 0x20, 0, 0x53053053) = 0
+10:04:26.024563 mprotect(0x7f300ad95000, 16384, PROT_READ) = 0
+10:04:26.024657 mprotect(0x55cc1f1ef000, 4096, PROT_READ) = 0
+10:04:26.024909 mprotect(0x7f300ade1000, 8192, PROT_READ) = 0
+10:04:26.025088 prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+10:04:26.025203 munmap(0x7f300ada8000, 26102) = 0
+10:04:26.025331 rt_sigaction(SIGINT, {sa_handler=0x55cc1f1ed339, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f300ac03050}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+10:04:26.025466 socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 3
+10:04:26.025568 getrandom("\x1d\x55\x70\xb1\xb0\x23\xa5\x6b", 8, GRND_NONBLOCK) = 8
+10:04:26.025647 brk(NULL)               = 0x55cc20d68000
+10:04:26.025709 brk(0x55cc20d89000)     = 0x55cc20d89000
+10:04:26.025809 newfstatat(AT_FDCWD, "/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=20, ...}, 0) = 0
+10:04:26.025947 openat(AT_FDCWD, "/etc/host.conf", O_RDONLY|O_CLOEXEC) = 4
+10:04:26.026040 newfstatat(4, "", {st_mode=S_IFREG|0644, st_size=9, ...}, AT_EMPTY_PATH) = 0
+10:04:26.026148 read(4, "multi on\n", 4096) = 9
+10:04:26.026241 read(4, "", 4096)       = 0
+10:04:26.026306 close(4)                = 0
+10:04:26.026372 futex(0x7f300ada242c, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+10:04:26.026458 openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
+10:04:26.026557 newfstatat(4, "", {st_mode=S_IFREG|0644, st_size=20, ...}, AT_EMPTY_PATH) = 0
+10:04:26.026647 read(4, "nameserver 10.0.0.1\n", 4096) = 20
+10:04:26.026732 read(4, "", 4096)       = 0
+10:04:26.026803 uname({sysname="Linux", nodename="debian", ...}) = 0
+10:04:26.026876 newfstatat(4, "", {st_mode=S_IFREG|0644, st_size=20, ...}, AT_EMPTY_PATH) = 0
+10:04:26.026964 close(4)                = 0
+10:04:26.027035 newfstatat(AT_FDCWD, "/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=20, ...}, 0) = 0
+10:04:26.027130 connect(3, {sa_family=AF_INET, sin_port=htons(8094), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+10:04:26.028563 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:04:27.028883 recvfrom(3, "Please choose what kind of calcu"..., 200, 0, NULL, NULL) = 132
+10:04:27.036759 newfstatat(1, "", {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x7), ...}, AT_EMPTY_PATH) = 0
+10:04:27.036881 write(1, "Server: Please choose what kind "..., 114) = 114
+10:04:27.037068 newfstatat(0, "", {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x7), ...}, AT_EMPTY_PATH) = 0
+10:04:27.037176 write(1, "Please input your choice: ", 26) = 26
+10:04:27.037308 read(0, "2\n", 1024)    = 2
+10:04:47.814119 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:04:48.814896 sendto(3, "2", 1, 0, NULL, 0) = 1
+10:04:48.815693 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:04:49.816051 recvfrom(3, "Success you chose triangle area\n", 150, 0, NULL, NULL) = 32
+10:04:49.816671 write(1, "Server: Success you chose triang"..., 40) = 40
+10:04:49.816827 write(1, "\n", 1)       = 1
+10:04:49.817032 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:04:50.817429 recvfrom(3, "Please input the first side leng"..., 100, 0, NULL, NULL) = 36
+10:04:50.817980 write(1, "Server: Please input the first s"..., 44) = 44
+10:04:50.818133 read(0, "10\n", 1024)   = 3
+10:04:55.099745 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:04:56.100169 sendto(3, "10", 2, 0, NULL, 0) = 2
+10:04:56.100924 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:04:57.101402 recvfrom(3, "Please input the second side len"..., 100, 0, NULL, NULL) = 37
+10:04:57.101586 write(1, "Server: Please input the second "..., 45) = 45
+10:04:57.101685 read(0, "20\n", 1024)   = 3
+10:04:59.843760 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:05:00.844348 sendto(3, "20", 2, 0, NULL, 0) = 2
+10:05:00.845631 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:05:01.846300 recvfrom(3, "Please input the third side leng"..., 100, 0, NULL, NULL) = 36
+10:05:01.846494 write(1, "Server: Please input the third s"..., 44) = 44
+10:05:01.847028 read(0, "15\n", 1024)   = 3
+10:05:04.667849 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:05:05.668223 sendto(3, "15", 2, 0, NULL, 0) = 2
+10:05:05.669463 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:05:06.670496 recvfrom(3, "Area of the triangle: 72.62\n", 150, 0, NULL, NULL) = 28
+10:05:07.671563 write(1, "\n", 1)       = 1
+10:05:07.671834 write(1, "Server: Area of the triangle: 72"..., 36) = 36
+10:05:07.672251 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:05:08.672658 recvfrom(3, "The triangle is a scalene one\n", 150, 0, NULL, NULL) = 30
+10:05:09.673596 write(1, "Server: The triangle is a scalen"..., 38) = 38
+10:05:09.674065 write(1, "Server: Please choose what kind "..., 114) = 114
+10:05:09.674531 write(1, "Please input your choice: ", 26) = 26
+10:05:09.674960 read(0, "2\n", 1024)    = 2
+10:06:04.626077 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:06:05.626483 sendto(3, "2", 1, 0, NULL, 0) = 1
+10:06:05.627465 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:06:06.628148 recvfrom(3, "Success you chose triangle area\n", 150, 0, NULL, NULL) = 32
+10:06:06.628483 write(1, "Server: Success you chose triang"..., 40) = 40
+10:06:06.628763 write(1, "\n", 1)       = 1
+10:06:06.629001 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:07.629277 recvfrom(3, "Please input the first side leng"..., 100, 0, NULL, NULL) = 36
+10:06:07.629465 write(1, "Server: Please input the first s"..., 44) = 44
+10:06:07.629906 read(0, "-10\n", 1024)  = 4
+10:06:11.409264 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:12.409637 sendto(3, "-10", 3, 0, NULL, 0) = 3
+10:06:12.410362 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:13.410962 recvfrom(3, "Error input a number 1 or above:"..., 100, 0, NULL, NULL) = 33
+10:06:13.411143 write(1, "Server: Error input a number 1 o"..., 41) = 41
+10:06:13.411634 read(0, "10\n", 1024)   = 3
+10:06:18.662428 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:19.662805 sendto(3, "10", 2, 0, NULL, 0) = 2
+10:06:19.663621 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:20.663909 recvfrom(3, "Please input the second side len"..., 100, 0, NULL, NULL) = 37
+10:06:20.664265 write(1, "Server: Please input the second "..., 45) = 45
+10:06:20.664648 read(0, "15\n", 1024)   = 3
+10:06:21.799888 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:22.800249 sendto(3, "15", 2, 0, NULL, 0) = 2
+10:06:22.800943 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:23.802030 recvfrom(3, "Please input the third side leng"..., 100, 0, NULL, NULL) = 36
+10:06:23.802384 write(1, "Server: Please input the third s"..., 44) = 44
+10:06:23.803114 read(0, "0.1\n", 1024)  = 4
+10:06:28.940962 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de480) = 0
+10:06:29.941333 sendto(3, "0", 1, 0, NULL, 0) = 1
+10:06:29.942003 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:06:30.942339 recvfrom(3, "Area of the triangle: 0.00\n", 150, 0, NULL, NULL) = 27
+10:06:31.943855 write(1, "\n", 1)       = 1
+10:06:31.944294 write(1, "Server: Area of the triangle: 0."..., 35) = 35
+10:06:31.944793 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:06:32.945222 recvfrom(3, "The triangle is a scalene one\n", 150, 0, NULL, NULL) = 30
+10:06:33.946681 write(1, "Server: The triangle is a scalen"..., 38) = 38
+10:06:33.947148 write(1, "Server: Please choose what kind "..., 114) = 114
+10:06:33.947757 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:06:34.948189 sendto(3, ".1", 2, 0, NULL, 0) = 2
+10:06:34.948599 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7fffde5de580) = 0
+10:06:35.949186 recvfrom(3, "Incorrect choice\n", 150, 0, NULL, NULL) = 17
+10:06:35.949505 write(1, "Please input your choice: Server"..., 51) = 51
+10:06:35.949969 write(1, "\n", 1)       = 1
+10:06:35.950375 write(1, "Server: please input your choice"..., 148) = 148
+10:06:35.950838 write(1, "Please input your choice: ", 26) = 26
+10:06:35.951227 read(0, 0x55cc20d68de0, 1024) = -1 EIO (Input/output error)
+10:10:31.027223 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, {tv_sec=0, tv_nsec=999202003}) = ? ERESTART_RESTARTBLOCK (Interrupted by signal)
+10:10:31.028266 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.028552 +++ killed by SIGHUP +++

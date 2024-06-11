@@ -1,0 +1,10 @@
+10:04:26.071673 set_robust_list(0x7f6c10c03a20, 24) = 0
+10:04:26.071818 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.071924 close(3)                = 0
+10:04:26.072032 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea7370120) = 0
+10:04:27.072387 sendto(4, "Please choose what kind of calcu"..., 132, 0, NULL, 0) = 132
+10:04:27.073790 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:04:28.074147 recvfrom(4, "", 10, 0, NULL, NULL) = 0
+10:10:31.023655 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, {tv_sec=1, tv_nsec=47213}) = ? ERESTART_RESTARTBLOCK (Interrupted by signal)
+10:10:31.032289 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.033175 +++ killed by SIGHUP +++

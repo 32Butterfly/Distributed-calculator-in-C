@@ -1,0 +1,17 @@
+10:04:26.031698 set_robust_list(0x7f6c10c03a20, 24) = 0
+10:04:26.031856 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.032053 read(9, "\2\0\0\0", 4)  = 4
+10:04:48.816047 read(9, "\n\0\0\0\24\0\0\0\17\0\0\0", 12) = 12
+10:05:05.669280 close(5)                = -1 EBADF (Bad file descriptor)
+10:05:05.669616 write(8, "Area of the triangle: 72.62\n\0\0\0\0"..., 50) = 50
+10:05:05.669859 close(5)                = -1 EBADF (Bad file descriptor)
+10:05:05.669967 write(8, "The triangle is a scalene one\n\0\0"..., 50) = 50
+10:05:05.670087 read(9, "\2\0\0\0", 4)  = 4
+10:06:05.627601 read(9, "\n\0\0\0\17\0\0\0\5\0\0\0", 12) = 12
+10:06:29.942378 close(5)                = -1 EBADF (Bad file descriptor)
+10:06:29.942585 write(8, "Area of the triangle: 0.00\n\0\0\0\0\0"..., 50) = 50
+10:06:29.942780 close(5)                = -1 EBADF (Bad file descriptor)
+10:06:29.942885 write(8, "The triangle is a scalene one\n\0\0"..., 50) = 50
+10:06:29.943004 read(9, 0x7ffea7370278, 4) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+10:10:31.030105 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.033067 +++ killed by SIGHUP +++

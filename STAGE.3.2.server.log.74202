@@ -1,0 +1,8 @@
+10:04:26.082624 set_robust_list(0x7f6c10c03a20, 24) = 0
+10:04:26.082769 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.082910 read(13, "\1\0\0\0", 4) = 4
+10:04:34.233733 read(13, "\n\0\0\0", 4) = 4
+10:04:41.999020 write(12, "\0_7\0", 4)  = 4
+10:04:41.999241 read(13, 0x7ffea7370278, 4) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+10:10:31.029703 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.032794 +++ killed by SIGHUP +++

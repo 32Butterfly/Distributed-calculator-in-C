@@ -1,0 +1,28 @@
+10:04:26.083058 set_robust_list(0x7f6c10c03a20, 24) = 0
+10:04:26.083196 rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.083299 close(3)                = 0
+10:04:26.083406 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea7370120) = 0
+10:04:27.083752 sendto(4, "Please choose what kind of calcu"..., 132, 0, NULL, 0) = 132
+10:04:27.085149 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:04:28.085502 recvfrom(4, "1", 10, 0, NULL, NULL) = 1
+10:04:34.233081 write(1, "Client chose option: 1\n", 23) = 23
+10:04:34.233241 close(13)               = 0
+10:04:34.233409 write(14, "\1\0\0\0", 4) = 4
+10:04:34.233783 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea7370100) = 0
+10:04:35.234077 sendto(4, "Success you chose factorial\n", 28, 0, NULL, 0) = 28
+10:04:35.234766 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736ff30) = 0
+10:04:36.235352 sendto(4, "Input the number of the factoria"..., 44, 0, NULL, 0) = 44
+10:04:36.236373 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736ff30) = 0
+10:04:37.236728 recvfrom(4, "10", 100, 0, NULL, NULL) = 2
+10:04:41.998288 write(1, "Client: wants the factorial of 1"..., 34) = 34
+10:04:41.998469 close(13)               = -1 EBADF (Bad file descriptor)
+10:04:41.998646 write(14, "\n\0\0\0", 4) = 4
+10:04:41.999082 close(12)               = 0
+10:04:41.999285 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736ff50) = 0
+10:04:42.999584 read(5, "\0_7\0", 4)    = 4
+10:04:42.999753 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea736ff30) = 0
+10:04:44.000102 sendto(4, "3628800", 7, 0, NULL, 0) = 7
+10:04:44.000975 clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0}, 0x7ffea73700e0) = 0
+10:04:45.001327 recvfrom(4, 0x7ffea7370162, 10, 0, NULL, NULL) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+10:10:31.030021 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.032831 +++ killed by SIGHUP +++

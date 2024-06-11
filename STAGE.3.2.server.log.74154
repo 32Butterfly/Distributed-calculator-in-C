@@ -1,0 +1,85 @@
+10:04:25.956678 execve("/opt/gitREPO.T3/evdm0167/task3/server", ["/opt/gitREPO.T3/evdm0167/task3/s"..., "8094"], 0x7ffdaf553920 /* 19 vars */) = 0
+10:04:25.957713 brk(NULL)               = 0x56529b4ec000
+10:04:25.957961 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f6c10ecd000
+10:04:25.958137 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+10:04:25.958389 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+10:04:25.958591 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=26102, ...}, AT_EMPTY_PATH) = 0
+10:04:25.959698 mmap(NULL, 26102, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f6c10ec6000
+10:04:25.959832 close(3)                = 0
+10:04:25.959974 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+10:04:25.960125 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+10:04:25.960289 newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=907784, ...}, AT_EMPTY_PATH) = 0
+10:04:25.960441 mmap(NULL, 909560, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f6c10de7000
+10:04:25.960575 mmap(0x7f6c10df7000, 471040, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x7f6c10df7000
+10:04:25.962452 mmap(0x7f6c10e6a000, 368640, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x83000) = 0x7f6c10e6a000
+10:04:25.962616 mmap(0x7f6c10ec4000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xdc000) = 0x7f6c10ec4000
+10:04:25.962843 close(3)                = 0
+10:04:25.962980 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+10:04:25.963131 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20t\2\0\0\0\0\0"..., 832) = 832
+10:04:25.963262 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+10:04:25.963587 newfstatat(3, "", {st_mode=S_IFREG|0755, st_size=1922136, ...}, AT_EMPTY_PATH) = 0
+10:04:25.963750 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+10:04:25.966173 mmap(NULL, 1970000, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f6c10c06000
+10:04:25.966310 mmap(0x7f6c10c2c000, 1396736, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x26000) = 0x7f6c10c2c000
+10:04:25.966499 mmap(0x7f6c10d81000, 339968, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17b000) = 0x7f6c10d81000
+10:04:25.966649 mmap(0x7f6c10dd4000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1ce000) = 0x7f6c10dd4000
+10:04:25.966815 mmap(0x7f6c10dda000, 53072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f6c10dda000
+10:04:25.967000 close(3)                = 0
+10:04:25.967170 mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f6c10c03000
+10:04:25.967301 arch_prctl(ARCH_SET_FS, 0x7f6c10c03740) = 0
+10:04:25.968940 set_tid_address(0x7f6c10c03a10) = 74154
+10:04:25.969044 set_robust_list(0x7f6c10c03a20, 24) = 0
+10:04:25.969108 rseq(0x7f6c10c04060, 0x20, 0, 0x53053053) = 0
+10:04:25.969265 mprotect(0x7f6c10dd4000, 16384, PROT_READ) = 0
+10:04:25.969438 mprotect(0x7f6c10ec4000, 4096, PROT_READ) = 0
+10:04:25.969527 mprotect(0x56529b48b000, 4096, PROT_READ) = 0
+10:04:25.969613 mprotect(0x7f6c10eff000, 8192, PROT_READ) = 0
+10:04:25.969719 prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+10:04:25.969860 munmap(0x7f6c10ec6000, 26102) = 0
+10:04:25.970005 socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 3
+10:04:25.970121 bind(3, {sa_family=AF_INET, sin_port=htons(8094), sin_addr=inet_addr("0.0.0.0")}, 16) = 0
+10:04:25.970255 listen(3, 5)            = 0
+10:04:25.970365 newfstatat(1, "", {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
+10:04:25.970499 getrandom("\xcf\xb1\xc0\x50\x37\x48\x6e\x2b", 8, GRND_NONBLOCK) = 8
+10:04:25.971546 brk(NULL)               = 0x56529b4ec000
+10:04:25.975633 brk(0x56529b50d000)     = 0x56529b50d000
+10:04:25.975747 write(1, "Server listening on port 8094..."..., 33) = 33
+10:04:25.975899 accept(3, {sa_family=AF_INET, sin_port=htons(32938), sin_addr=inet_addr("127.0.0.1")}, [16]) = 4
+10:04:26.003197 pipe2([5, 6], 0)        = 0
+10:04:26.003354 pipe2([7, 8], 0)        = 0
+10:04:26.003593 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74177
+10:04:26.004020 rt_sigaction(SIGINT, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+10:04:26.004204 close(8)                = 0
+10:04:26.004326 close(5)                = 0
+10:04:26.004449 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74178
+10:04:26.004825 close(4)                = 0
+10:04:26.004950 accept(3, {sa_family=AF_INET, sin_port=htons(32942), sin_addr=inet_addr("127.0.0.1")}, [16]) = 4
+10:04:26.027364 pipe2([5, 8], 0)        = 0
+10:04:26.027460 pipe2([9, 10], 0)       = 0
+10:04:26.027621 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74182
+10:04:26.027852 rt_sigaction(SIGINT, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.027950 close(10)               = 0
+10:04:26.028015 close(5)                = 0
+10:04:26.028077 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74183
+10:04:26.028287 close(4)                = 0
+10:04:26.028357 accept(3, {sa_family=AF_INET, sin_port=htons(32952), sin_addr=inet_addr("127.0.0.1")}, [16]) = 4
+10:04:26.066456 pipe2([5, 10], 0)       = 0
+10:04:26.066561 pipe2([11, 12], 0)      = 0
+10:04:26.066647 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74198
+10:04:26.066862 rt_sigaction(SIGINT, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.066960 close(12)               = 0
+10:04:26.067025 close(5)                = 0
+10:04:26.067088 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74199
+10:04:26.067297 close(4)                = 0
+10:04:26.067367 accept(3, {sa_family=AF_INET, sin_port=htons(32966), sin_addr=inet_addr("127.0.0.1")}, [16]) = 4
+10:04:26.081442 pipe2([5, 12], 0)       = 0
+10:04:26.081533 pipe2([13, 14], 0)      = 0
+10:04:26.081619 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74201
+10:04:26.081826 rt_sigaction(SIGINT, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, {sa_handler=0x56529b4883c0, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f6c10c42050}, 8) = 0
+10:04:26.081932 close(14)               = 0
+10:04:26.081998 close(5)                = 0
+10:04:26.082061 clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f6c10c03a10) = 74202
+10:04:26.082272 close(4)                = 0
+10:04:26.082342 accept(3, 0x7ffea7370290, [16]) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+10:10:31.022119 --- SIGHUP {si_signo=SIGHUP, si_code=SI_KERNEL} ---
+10:10:31.023887 +++ killed by SIGHUP +++
